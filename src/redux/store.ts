@@ -1,3 +1,7 @@
+import {AddPostACType, profileReduser, UpdateNewPostTextACType} from "./profile-reduser";
+//import {sideBarReduser} from "./sideBar-reduser";
+import {dialogsReduser, sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reduser";
+
 export type PostType = {
     id: number
     message: string
@@ -14,9 +18,10 @@ export type MessageType = {
     message: string
 }
 
-export  type DialogsPageType = {
+export type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
+    newMessageBody: string
 }
 
 export type  ProfilePageType = {
@@ -32,34 +37,20 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
-export type StateACType = AddPostACType | UpdateNewPostTextACType
-
-type AddPostACType = ReturnType<typeof addPostAC>
-
-type UpdateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
+export type StateACType =
+    AddPostACType
+    | UpdateNewPostTextACType
+    | sendMessageACType
+    | updateNewMessageBodyACType
 
 export type StoreType = {
     _state: RootStateType
     updateNewPostText: (newText: string) => void
     addPost: (postText: string) => void
-    _onChange: () => void
+    _onChange: (_state: RootStateType) => void
     subscribe: (CallbackObserver: () => void) => void
     getState:() => RootStateType
     dispatch:(action:StateACType) => void
-}
-
-export const addPostAC = (postText: string) => {
-    return {
-        type:"ADD-POST",
-        postText: postText,
-    } as const
-}
-
-export const updateNewPostTextAC =(newText: string) => {
-    return {
-        type:"UPDATE-NEW-POST-TEXT",
-        newText:newText,
-    } as const
 }
 
 const store: StoreType = {
@@ -88,21 +79,24 @@ const store: StoreType = {
             {id: 3, message: "NICE"},
             {id: 4, message: "Smie you"},
         ],
+        newMessageBody: "",
     },
     sidebar: {
         sidebar: []
     }
 },
+    //
     updateNewPostText(newText:string){
         this._state.profilePage.newPostText = (newText)
-        this._onChange()
+        this._onChange(this._state)
     },
     addPost(postText:string){
         const newPost:PostType = {id: 6, message: postText, likeCounts: '0'};
         this._state.profilePage.posts.push(newPost)
-        this._onChange()
+        this._onChange(this._state)
     },
-    _onChange(){
+    //
+    _onChange(_state: RootStateType){
         console.log('State changed')
     },
     subscribe(CallbackObserver){
@@ -112,14 +106,12 @@ const store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === "ADD-POST"){
-            const newPost:PostType = {id: 6, message: action.postText, likeCounts: '0'};
-            this._state.profilePage.posts.push(newPost)
-            this._onChange()
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._state.profilePage.newPostText = (action.newText)
-            this._onChange()
-        }
+
+        this._state.profilePage = profileReduser(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReduser(this._state.dialogsPage, action)
+        //this._state.sidebar = sideBarReduser(this._state.sidebar, action)
+
+        this._onChange(this._state)
     }
 }
 

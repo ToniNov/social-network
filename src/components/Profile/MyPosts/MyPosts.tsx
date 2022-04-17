@@ -1,7 +1,8 @@
-import React, {ChangeEvent, ChangeEventHandler} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {addPostAC, PostType, StateACType, updateNewPostTextAC} from "../../../redux/state";
+import {PostType, StateACType} from "../../../redux/store";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reduser";
 
 type MyPostsType = {
     posts:Array<PostType>
@@ -19,7 +20,6 @@ const MyPosts = (props:MyPostsType) => {
     const addPost = () => {
         props.dispatch(addPostAC(props.newPostText))
     }
-
 
     let onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
         props.dispatch(updateNewPostTextAC(e.currentTarget.value))
