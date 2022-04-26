@@ -2,18 +2,18 @@ import {AddPostACType, profileReduser, UpdateNewPostTextACType} from "./profile-
 //import {sideBarReduser} from "./sideBar-reduser";
 import {dialogsReduser, sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reduser";
 
-export type PostType = {
+type PostType = {
     id: number
     message: string
     likeCounts: string
 }
 
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
 }
 
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
 }
@@ -37,7 +37,7 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
-export type StateACType =
+type StateACType =
     AddPostACType
     | UpdateNewPostTextACType
     | sendMessageACType

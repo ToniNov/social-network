@@ -1,25 +1,54 @@
-import  { DialogType, MessageType,StateACType} from "./store";
+import {StateACType} from "./redux-store";
+
 
 export type sendMessageACType = ReturnType<typeof sendMessageAC>
 export type updateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>
 
-type dialogsReduserType = {
+
+export type DialogType = {
+    id: number
+    name: string
+}
+
+export type MessageType = {
+    id: number
+    message: string
+}
+
+export type InitialDialogsStateType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageBody: string
 }
 
-export const dialogsReduser = (state:dialogsReduserType, action:StateACType) => {
+let initialState :InitialDialogsStateType = {
+    dialogs: [
+        {id: 1, name: "Anton"},
+        {id: 2, name: "Bob"},
+        {id: 3, name: "Jon"},
+    ],
+    messages: [
+        {id: 1, message: "Hi"},
+        {id: 2, message: "Yooo"},
+    ],
+    newMessageBody: "",
+}
+
+export const dialogsReduser = (state:InitialDialogsStateType = initialState, action:StateACType):InitialDialogsStateType => {
 
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-BODY":
-            state.newMessageBody = (action.body)
-            return state;
+            return {
+                ...state,
+                newMessageBody:action.body
+            }
         case "SAND-MESSAGE":
             let body = state.newMessageBody
-            state.newMessageBody = ''
-            state.messages.push({id: 5, message: body})
-            return state;
+            return  {
+                ...state,
+                newMessageBody : '',
+                messages: [...state.messages,{id: 5, message: body}]
+            }
         default:
             return state;
     }
