@@ -1,9 +1,7 @@
-import {StateACType} from "./redux-store";
+export type DialogReduserACType =  sendMessageACType | updateNewMessageBodyACType
 
-
-export type sendMessageACType = ReturnType<typeof sendMessageAC>
-export type updateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>
-
+type sendMessageACType = ReturnType<typeof sendMessage>
+type updateNewMessageBodyACType = ReturnType<typeof updateNewMessageBody>
 
 export type DialogType = {
     id: number
@@ -34,7 +32,7 @@ let initialState :InitialDialogsStateType = {
     newMessageBody: "",
 }
 
-export const dialogsReduser = (state:InitialDialogsStateType = initialState, action:StateACType):InitialDialogsStateType => {
+export const dialogsReduser = (state:InitialDialogsStateType = initialState, action:DialogReduserACType):InitialDialogsStateType => {
 
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-BODY":
@@ -54,13 +52,13 @@ export const dialogsReduser = (state:InitialDialogsStateType = initialState, act
     }
 }
 
-export const sendMessageAC = () => {
+export const sendMessage = () => {
     return {
         type:"SAND-MESSAGE",
     } as const
 }
 
-export const updateNewMessageBodyAC =(body: string) => {
+export const updateNewMessageBody = (body: string) => {
     return {
         type:"UPDATE-NEW-MESSAGE-BODY",
         body:body

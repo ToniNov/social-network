@@ -1,6 +1,5 @@
-import {AddPostACType, profileReduser, UpdateNewPostTextACType} from "./profile-reduser";
-//import {sideBarReduser} from "./sideBar-reduser";
-import {dialogsReduser, sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reduser";
+import { profileReduser} from "./profile-reduser";
+import {dialogsReduser} from "./dialogs-reduser";
 
 type PostType = {
     id: number
@@ -37,11 +36,6 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
-type StateACType =
-    AddPostACType
-    | UpdateNewPostTextACType
-    | sendMessageACType
-    | updateNewMessageBodyACType
 
 export type StoreType = {
     _state: RootStateType
@@ -50,7 +44,7 @@ export type StoreType = {
     _onChange: (_state: RootStateType) => void
     subscribe: (CallbackObserver: () => void) => void
     getState:() => RootStateType
-    dispatch:(action:StateACType) => void
+    dispatch:(action:any) => void
 }
 
 const store: StoreType = {
@@ -105,10 +99,10 @@ const store: StoreType = {
     getState(){
         return this._state
     },
-    dispatch(action) {
+    dispatch(action: any) {
 
-        this._state.profilePage = profileReduser(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReduser(this._state.dialogsPage, action)
+        // this._state.profilePage = profileReduser(this._state.profilePage, action)
+        // this._state.dialogsPage = dialogsReduser(this._state.dialogsPage, action)
         //this._state.sidebar = sideBarReduser(this._state.sidebar, action)
 
         this._onChange(this._state)

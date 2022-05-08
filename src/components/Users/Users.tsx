@@ -1,57 +1,78 @@
-import React, {useEffect} from 'react';
-import s from './Usrer.module.css'
-import {UsersPropsType} from "./UsersContainer";
+import React from 'react';
+import s from "./Usrer.module.css";
+import defaultUserPhoto from "../../assets/images/User-Avatar-Profile.png";
+import {followSuccess, toggleIsFollowingProgress, UserType} from "../../redux/users-reduser";
+import { NavLink } from 'react-router-dom';
 import axios from "axios";
-import defaultUserPhoto from '../../assets/images/User-Avatar-Profile.png'
+import {usersApi} from "../../api/api";
 
-/*
-const Users = (props: UsersPropsType) => {
+type UsersPresPropsType = {
+    totalUsersCount: number
+    pageSize: number
+    onPageChange: (pageNumber: number) => void
+    users: UserType[]
+    currentPage: number
+    unfollowSuccess: (userId: number) => void
+    followSuccess: (userId: number) => void
+    followingInProgress: number[]
+}
 
-    let getUsers = ()=> {
-        if (props.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                props.setUsers(response.data.items)
-            });
 
-        }
+const Users = (props: UsersPresPropsType) => {
+
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+
+    let pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+        if (i > 30) break
     }
 
     return (
         <div>
-            <button onClick={getUsers}>Get Users</button>
+            <div>
+                {pages.map(p => {
+                    return <span onClick={(e) => {
+                        props.onPageChange(p)
+                    }}
+                    className={props.currentPage === p ? s.selectedPage : ""}>{p}</span>
+                })}
+            </div>
             {
-                props.users.map(u => <div key={u.id}>
+                props.users.map(u =>
+                    <div key={u.id}>
                     <span>
                         <div>
-                            <img className={s.photo}
-                                 src={u.photos.small != null
-                                     ? u.photos.small
-                                     : defaultUserPhoto}
-                             alt="User Photo"/>
+                            <NavLink to={'/profile/' + u.id} >
+                                <img className={s.photo}
+                                     src={u.photos.small || defaultUserPhoto}  //  || или
+                                     alt="User Photo"/>
+                            </NavLink>
                         </div>
                         <div>
                             {u.followed
-                                ? <button onClick={() => {
-                                    props.unfollow(u.id)
-                                }}>Unfollow</button>
-                                : <button onClick={() => {
-                                    props.follow(u.id)
-                                }}>Follow</button>}
+                                ? <button
+                                    disabled={props.followingInProgress.some(id=>id === u.id)}
+                                    onClick={() => {props.unfollowSuccess(u.id)}}
+                                >Unfollow</button>
+                                : <button
+                                    disabled={props.followingInProgress.some(id => id === u.id)}
+                                    onClick={() => {props.followSuccess(u.id)}}
+                                >Follow</button>}
                         </div>
                     </span>
-                    <span>
+                        <span>
                         <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
-                    <span>
+                        <span>
                         <div>{'u.location.country'}</div>
                         <div>{'u.location.city'}</div>
                     </span>
-                </div>)
+                    </div>)
             }
-
         </div>
     );
 };
 
-export default Users;*/
+export default Users;
