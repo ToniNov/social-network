@@ -1,10 +1,8 @@
-import {Dispatch} from "redux";
 import {profileApi, usersApi} from "../api/api";
 import {TypedDispatch} from "./redux-store";
 
 export type InitialProfileStateType = {
     posts: Array<PostType>
-    newPostText: string
     profile: null | ProfileType
     status: string
 }
@@ -40,11 +38,10 @@ type PhotosType = {
     large: string
 }
 
-export type ProfileReduserACType = AddPostACType | UpdateNewPostTextACType
+export type ProfileReduserACType = AddPostACType
     | setUserProfileType | setStatusType
 
 type AddPostACType = ReturnType<typeof addPost>
-type UpdateNewPostTextACType = ReturnType<typeof updateNewPostText>
 type setUserProfileType = ReturnType<typeof setUserProfile>
 type setStatusType = ReturnType<typeof setStatus>
 
@@ -53,7 +50,6 @@ let initialState: InitialProfileStateType = {
         {id: 1, message: 'Hi,how are you?', likeCounts: '5'},
         {id: 2, message: 'Yo', likeCounts: '10'},
     ],
-    newPostText: 'Type post',
     profile: null,
     status: ''
 }
@@ -62,16 +58,14 @@ export const profileReduser = (state = initialState, action: ProfileReduserACTyp
 
     switch (action.type) {
         case "ADD-POST":
-            let newPost: PostType = {id: 3, message: action.postText, likeCounts: '0'};
+            let newPost: PostType = {
+                id: 3,
+                message: action.newPostText,
+                likeCounts: '0'
+                };
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: ''
-            }
-        case "UPDATE-NEW-POST-TEXT":
-            return {
-                ...state,
-                newPostText: action.newText
             }
         case "SET-USER-PROFILE":
             return {
@@ -88,17 +82,12 @@ export const profileReduser = (state = initialState, action: ProfileReduserACTyp
     }
 }
 
-export const addPost = (postText: string) => {
+export const addPost = (newPostText: string) => {
     return {
         type: "ADD-POST",
-        postText: postText,
+        newPostText: newPostText,
     } as const
 }
-export const updateNewPostText = (newText: string) => ({
-    type: "UPDATE-NEW-POST-TEXT",
-    newText: newText,
-} as const)
-
 export const setUserProfile = (profile: ProfileType) => ({
     type: "SET-USER-PROFILE",
     profile: profile,

@@ -6,7 +6,7 @@ import {ProfileType} from "../../redux/profile-reduser";
 
 type PropsType = {
     profile: null | ProfileType
-    status: any
+    status: string
     updateStatus:(status:any)=> void
 }
 

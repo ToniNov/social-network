@@ -7,7 +7,7 @@ import ProfileStatus from "./ProfileStatus";
 
 type PropsType = {
     profile: null | ProfileType
-    status: any
+    status: string
     updateStatus:(status:any)=> void
 }
 

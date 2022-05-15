@@ -1,7 +1,7 @@
-export type DialogReduserACType =  sendMessageACType | updateNewMessageBodyACType
+export type DialogReduserACType =  sendMessageACType
 
 type sendMessageACType = ReturnType<typeof sendMessage>
-type updateNewMessageBodyACType = ReturnType<typeof updateNewMessageBody>
+
 
 export type DialogType = {
     id: number
@@ -16,7 +16,6 @@ export type MessageType = {
 export type InitialDialogsStateType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newMessageBody: string
 }
 
 let initialState :InitialDialogsStateType = {
@@ -27,24 +26,17 @@ let initialState :InitialDialogsStateType = {
     ],
     messages: [
         {id: 1, message: "Hi"},
-        {id: 2, message: "Yooo"},
+        {id: 2, message: "Yo"},
     ],
-    newMessageBody: "",
 }
 
 export const dialogsReduser = (state:InitialDialogsStateType = initialState, action:DialogReduserACType):InitialDialogsStateType => {
 
     switch (action.type) {
-        case "UPDATE-NEW-MESSAGE-BODY":
-            return {
-                ...state,
-                newMessageBody:action.body
-            }
-        case "SAND-MESSAGE":
-            let body = state.newMessageBody
+        case "SEND-MESSAGE":
+            let body = action.newMessageBody
             return  {
                 ...state,
-                newMessageBody : '',
                 messages: [...state.messages,{id: 5, message: body}]
             }
         default:
@@ -52,15 +44,9 @@ export const dialogsReduser = (state:InitialDialogsStateType = initialState, act
     }
 }
 
-export const sendMessage = () => {
+export const sendMessage = (newMessageBody: string) => {
     return {
-        type:"SAND-MESSAGE",
-    } as const
-}
-
-export const updateNewMessageBody = (body: string) => {
-    return {
-        type:"UPDATE-NEW-MESSAGE-BODY",
-        body:body
+        type:"SEND-MESSAGE",
+        newMessageBody: newMessageBody
     } as const
 }

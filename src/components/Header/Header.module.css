@@ -7,6 +7,7 @@
 }
 
 .loginBlock {
-    float: right ;
-    padding: 20px;
+    float: right;
+    padding-top: 20px;
+    padding-right: 550px;
 }
