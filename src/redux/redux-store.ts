@@ -6,18 +6,21 @@ import {authReduser, AuthReduserACType} from "./auth-reduser";
 import thunk, {ThunkDispatch} from "redux-thunk";
 import {useDispatch} from "react-redux";
 import {reducer as formReduser} from "redux-form";
+import {appReduser, AppReduserACType} from "./app-reduser";
 
 
 export type StateACType =
     UserReduserACType | ProfileReduserACType
     | DialogReduserACType | AuthReduserACType
+    | AppReduserACType
 
 let rootReducer = combineReducers({
     profilePage: profileReduser,
     dialogsPage: dialogsReduser,
     usersPage: usersReduser,
     auth: authReduser,
-    form: formReduser
+    form: formReduser,
+    app: appReduser,
     //sideBar: sideBarReduser
 })
 
