@@ -38,12 +38,12 @@ type PhotosType = {
     large: string
 }
 
-export type ProfileReduserACType = AddPostACType
-    | setUserProfileType | setStatusType
+export type ProfileReduserACType = AddPostACType | SetUserProfileType | SetStatusType | DeletePostType
 
 type AddPostACType = ReturnType<typeof addPost>
-type setUserProfileType = ReturnType<typeof setUserProfile>
-type setStatusType = ReturnType<typeof setStatus>
+type SetUserProfileType = ReturnType<typeof setUserProfile>
+type SetStatusType = ReturnType<typeof setStatus>
+type DeletePostType = ReturnType<typeof deletePost>
 
 let initialState: InitialProfileStateType = {
     posts: [
@@ -77,6 +77,11 @@ export const profileReduser = (state = initialState, action: ProfileReduserACTyp
                 ...state,
                 status: action.status
             }
+        case  "DELETE-POST":{
+            return {
+                ...state, posts: state.posts.filter(p => p.id !== action.postId)
+            }
+        }
         default:
             return state;
     }
@@ -96,6 +101,11 @@ export const setUserProfile = (profile: ProfileType) => ({
 export const setStatus = (status:string) => ({
     type: "SET-STATUS",
     status: status,
+} as const)
+
+export const deletePost = (postId: number ) => ({
+    type: "DELETE-POST",
+    postId: postId,
 } as const)
 
 // Thynk
