@@ -57,27 +57,28 @@ let initialState: InitialProfileStateType = {
 export const profileReduser = (state = initialState, action: ProfileReduserACType): InitialProfileStateType => {
 
     switch (action.type) {
-        case "ADD-POST":
+        case "profile/ADD-POST":
+            debugger
             let newPost: PostType = {
                 id: 3,
                 message: action.newPostText,
                 likeCounts: '0'
-                };
+            };
             return {
                 ...state,
                 posts: [...state.posts, newPost],
             }
-        case "SET-USER-PROFILE":
+        case "profile/SET-USER-PROFILE":
             return {
                 ...state,
                 profile: action.profile
             }
-        case "SET-STATUS":
+        case "profile/SET-STATUS":
             return {
                 ...state,
                 status: action.status
             }
-        case  "DELETE-POST":{
+        case  "profile/DELETE-POST": {
             return {
                 ...state, posts: state.posts.filter(p => p.id !== action.postId)
             }
@@ -87,46 +88,41 @@ export const profileReduser = (state = initialState, action: ProfileReduserACTyp
     }
 }
 
-export const addPost = (newPostText: string) => {
-    return {
-        type: "ADD-POST",
-        newPostText: newPostText,
-    } as const
-}
+export const addPost = (newPostText: string) => ({
+    type: "profile/ADD-POST",
+    newPostText,
+} as const)
+
 export const setUserProfile = (profile: ProfileType) => ({
-    type: "SET-USER-PROFILE",
-    profile: profile,
+    type: "profile/SET-USER-PROFILE",
+    profile,
 } as const)
 
-export const setStatus = (status:string) => ({
-    type: "SET-STATUS",
-    status: status,
+export const setStatus = (status: string) => ({
+    type: "profile/SET-STATUS",
+    status,
 } as const)
 
-export const deletePost = (postId: number ) => ({
-    type: "DELETE-POST",
-    postId: postId,
+export const deletePost = (postId: number) => ({
+    type: "profile/DELETE-POST",
+    postId,
 } as const)
 
 // Thynk
-export const getUserProfile = (userId: string) => (dispatch: TypedDispatch) => {
-    usersApi.getProfile(Number(userId))
-        .then(response => {
-            dispatch(setUserProfile(response.data));
-        });
-}
-export const getStatus = (userId: string) => (dispatch: TypedDispatch) => {
-    profileApi.getStatus(Number(userId))
-        .then(response => {
-            dispatch(setStatus(response.data));
-        });
-}
-export const updateStatus = (status: string) => (dispatch: TypedDispatch) => {
-    profileApi.updateStatus(status)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setStatus(status));
-            }
-        });
-}
+export const getUserProfile = (userId: string) => async (dispatch: TypedDispatch) => {
+    let response = await usersApi.getProfile(Number(userId))
+    dispatch(setUserProfile(response.data));
+};
+
+export const getStatus = (userId: string) => async (dispatch: TypedDispatch) => {
+    let response = await profileApi.getStatus(Number(userId))
+    dispatch(setStatus(response.data));
+};
+
+export const updateStatus = (status: string) => async (dispatch: TypedDispatch) => {
+    let response = await profileApi.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status));
+    }
+};
 
