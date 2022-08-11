@@ -16,7 +16,6 @@ let initialState: InitialAppStateType = {
 
 
 export const appReduser = (state: InitialAppStateType = initialState, action: AppReduserACType):InitialAppStateType=> {
-
     switch (action.type) {
         case "APP/INITIALIZED-SUCCESS":
             return {

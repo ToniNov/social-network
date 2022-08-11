@@ -57,7 +57,7 @@ let initialState: InitialProfileStateType = {
 export const profileReduser = (state = initialState, action: ProfileReduserACType): InitialProfileStateType => {
 
     switch (action.type) {
-        case "profile/ADD-POST":
+        case "PROFILE/ADD-POST":
             debugger
             let newPost: PostType = {
                 id: 3,
@@ -68,17 +68,17 @@ export const profileReduser = (state = initialState, action: ProfileReduserACTyp
                 ...state,
                 posts: [...state.posts, newPost],
             }
-        case "profile/SET-USER-PROFILE":
+        case "PROFILE/SET-USER-PROFILE":
             return {
                 ...state,
                 profile: action.profile
             }
-        case "profile/SET-STATUS":
+        case "PROFILE/SET-STATUS":
             return {
                 ...state,
                 status: action.status
             }
-        case  "profile/DELETE-POST": {
+        case  "PROFILE/DELETE-POST": {
             return {
                 ...state, posts: state.posts.filter(p => p.id !== action.postId)
             }
@@ -89,22 +89,22 @@ export const profileReduser = (state = initialState, action: ProfileReduserACTyp
 }
 
 export const addPost = (newPostText: string) => ({
-    type: "profile/ADD-POST",
+    type: "PROFILE/ADD-POST",
     newPostText,
 } as const)
 
 export const setUserProfile = (profile: ProfileType) => ({
-    type: "profile/SET-USER-PROFILE",
+    type: "PROFILE/SET-USER-PROFILE",
     profile,
 } as const)
 
 export const setStatus = (status: string) => ({
-    type: "profile/SET-STATUS",
+    type: "PROFILE/SET-STATUS",
     status,
 } as const)
 
 export const deletePost = (postId: number) => ({
-    type: "profile/DELETE-POST",
+    type: "PROFILE/DELETE-POST",
     postId,
 } as const)
 

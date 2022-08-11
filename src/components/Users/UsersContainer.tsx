@@ -66,7 +66,6 @@ type MapDispatchToPropsType = {
     unfollowSuccess: (userId: number) => void
     setCurrentPage: (pageNumber: number) => void
     toggleIsFollowingProgress:(isFetching:boolean, userId: number) => void
-    // типизация Thynk
     requestUsers: (currentPage: number, pageSize: number)  => void
 }
 
