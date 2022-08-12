@@ -2,8 +2,7 @@ import React, {ChangeEvent} from 'react';
 
 type ProfileStatusType = {
     status: string
-    updateStatus:(status:any)=> void
-
+    updateStatus:(status:string | null)=> void
 }
 
 class ProfileStatus extends React.Component<ProfileStatusType> {
