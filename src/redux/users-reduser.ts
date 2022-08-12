@@ -1,7 +1,8 @@
 import {usersApi} from "../api/api";
-import {Dispatch} from "redux";
+import {Action, Dispatch} from "redux";
 import {TypedDispatch} from "./redux-store";
 import {updateObjectInArray} from "../utils/object-helpers";
+import {AxiosResponse} from "axios";
 
 export type InitialUserStateType = {
     users: Array<UserType>
@@ -51,17 +52,21 @@ export const usersReduser = (state: InitialUserStateType = initialState, action:
         case "USERS/FOLLOW":
             return {
                 ...state,
-
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
-                // @ts-ignore
-                //users: updateObjectInArray(state.users, action.userId, "id", {followed: true})
+                users: updateObjectInArray(
+                    state.users,
+                    action.userId,
+                    "id",
+                    {followed: true}
+                )
             }
         case "USERS/UNFOLLOW":
             return {
                 ...state,
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
-                // @ts-ignore
-                //users: updateObjectInArray(state.users, action.userId, "id", {followed: false})
+                users: updateObjectInArray(
+                    state.users,
+                    action.userId,
+                    "id",
+                    {followed: false})
             }
         case "USERS/SET-USERS":
             return {
@@ -150,7 +155,15 @@ export const requestUsers = (requestPage: number, pageSize: number) => async (di
     dispatch(setTotalUsersCount(data.totalCount));
 }
 
-const followUnfollow = async (dispatch: any, userId: number, apiMethod:any, actionCreator:any) => {
+type ActionCreator<A extends  Action> = (...args: any[]) => A
+type FollowUnfollowApiMethod = (userId: number) => Promise<AxiosResponse<any, any>>
+
+const followUnfollow = async <A extends Action>(
+    dispatch: Dispatch,
+    userId: number,
+    apiMethod: FollowUnfollowApiMethod,
+    actionCreator:ActionCreator<A>
+) => {
     dispatch(toggleIsFollowingProgress(true, userId));
     let response = await apiMethod(userId);
     if (response.data.resultCode == 0) {
@@ -168,7 +181,7 @@ export const follow = (userId: number) => {
 
 export const unfollow = (userId: number) => {
     return async (dispatch: Dispatch) => {
-        let apiMethod = usersApi.follow.bind(usersApi)
+        let apiMethod = usersApi.unfollow.bind(usersApi)
         await followUnfollow(dispatch, userId, apiMethod, unfollowSuccess)
     }
 }

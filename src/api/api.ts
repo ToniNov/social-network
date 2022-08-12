@@ -16,11 +16,9 @@ export const usersApi = {
             });
     },
     follow (userId:number){
-        debugger
         return instance.post(`follow/${userId}`)
     },
     unfollow (userId:number){
-        debugger
         return instance.delete(`follow/${userId}`)
     },
     getProfile(userId:number) {

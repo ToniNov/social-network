@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactComponentElement} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {Route, withRouter} from "react-router-dom";
@@ -64,7 +64,7 @@ type  MapStateToPropsType = {
 
 let mapStateToProps = (state:AppStateType) : MapStateToPropsType =>({ initialized : state.app.initialized})
 
-export default compose(
+export default compose<React.FC>(
     withRouter,
     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
         {initializeApp}))(App)
