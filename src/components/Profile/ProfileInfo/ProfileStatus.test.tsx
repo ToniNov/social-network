@@ -3,7 +3,7 @@ import ProfileStatus from "./ProfileStatus";
 
 describe("ProfileStatus component", ()=>{
 
-    test("status from props should be in the state", () =>{
+    test("status from props should be in the state", () => {
         const component = create(<ProfileStatus status="Hello"  updateStatus={()=>{}}/>)
         const instance = component.getInstance();
         // @ts-ignore
