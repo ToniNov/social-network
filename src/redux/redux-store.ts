@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import {profileReduser, ProfileReduserACType} from "./profile-reduser";
+import {profileReduser, ProfileReducerACType} from "./profile-reduser";
 import {DialogReduserACType, dialogsReduser,} from "./dialogs-reduser";
 import {UserReduserACType, usersReduser} from "./users-reduser";
 import {authReduser, AuthReduserACType} from "./auth-reduser";
@@ -10,7 +10,7 @@ import {appReduser, AppReduserACType} from "./app-reduser";
 
 
 export type StateACType =
-    UserReduserACType | ProfileReduserACType
+    UserReduserACType | ProfileReducerACType
     | DialogReduserACType | AuthReduserACType
     | AppReduserACType
 
