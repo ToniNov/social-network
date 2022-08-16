@@ -2,14 +2,15 @@ import React from 'react';
 import s from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {PhotosType, ProfileType} from "../../redux/profile-reduser";
+import {ProfileType} from "../../redux/profile-reduser";
 
 type PropsType = {
     profile: null | ProfileType
     status: string
-    updateStatus:(status:any)=> void
-    savePhoto:(photos:PhotosType)=> void
-    isOwner: any
+    updateStatus:(status:string)=> void
+    savePhoto: (file: File ) => void
+    saveProfile: (profile: ProfileType) => Promise<any>
+    isOwner: boolean
 }
 
 const Profile = (props: PropsType) => {
@@ -21,6 +22,7 @@ const Profile = (props: PropsType) => {
                          status={props.status}
                          updateStatus={props.updateStatus}
                          savePhoto={props.savePhoto}
+                         saveProfile={props.saveProfile}
             />
             <MyPostsContainer />
         </div>
