@@ -51,6 +51,7 @@ class ProfileContainer extends React.Component<PropsType> {
                      status={this.props.status}
                      updateStatus={this.props.updateStatus}
                      savePhoto = {this.props.savePhoto}
+                     // @ts-ignore
                      saveProfile = {this.props.saveProfile}
             />
         );
