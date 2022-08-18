@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -23,9 +23,15 @@ type AppPropsType = {
 }
 
 class App extends React.Component<AppPropsType> {
-
+    catchAllUnhandledErrors = (promiseRejectionEvent: any) =>{
+        alert(promiseRejectionEvent)
+    }
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
+    }
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -39,13 +45,15 @@ class App extends React.Component<AppPropsType> {
                 <Navbar/>
                 <div className='app-wrapper-content'>
 
+                    <Route path={'/'}
+                           render = {() => <Redirect to={'/profile'}/>}/>
                     <Route path={'/dialogs'}
                            render = {() => withSuspense(DialogsContainer)}/>
                     <Route path={'/profile/:userId?'}
                            render = {() => withSuspense(ProfileContainer)}/>
                     <Route path={'/users'}
                            render = {() => withSuspense(UsersContainer)}/>
-                    <Route path={'/Login'}
+                    <Route path={'/login'}
                            render = {() => withSuspense(LoginPage)}/>
                     <Route path={'/news'}
                            render = {() => withSuspense(News)}/>
@@ -53,6 +61,8 @@ class App extends React.Component<AppPropsType> {
                            render = {() => withSuspense(Music)}/>
                     <Route path={'/settings'}
                            render = {() => withSuspense(Settings)}/>
+                    <Route path={'*'}
+                           render = {() => <div>404 Not found</div>}/>
 
                 </div>
             </div>
