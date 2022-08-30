@@ -1,5 +1,5 @@
 import {profileApi, usersApi} from "../api/api";
-import {AppThunkType, TypedDispatch} from "./redux-store";
+import {AppThunkType} from "./redux-store";
 import {stopSubmit} from "redux-form";
 import {PhotosType, PostType, ProfileType} from "../types/types";
 
