@@ -40,7 +40,7 @@ export type AppDispatch = typeof store.dispatch
 export const useTypedDispatch = () => useDispatch<TypedDispatch>()
 export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>
 
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
 
 // @ts-ignore
 window.__store__ = store;

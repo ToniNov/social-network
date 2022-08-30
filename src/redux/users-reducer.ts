@@ -1,6 +1,6 @@
 import {usersApi} from "../api/api";
 import {Action, Dispatch} from "redux";
-import {AppThunk, TypedDispatch} from "./redux-store";
+import {AppThunkType, TypedDispatch} from "./redux-store";
 import {updateObjectInArray} from "../utils/object-helpers";
 import {AxiosResponse} from "axios";
 import {UserType} from "../types/types";
@@ -130,7 +130,7 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) =
     } as const
 }
 
-export const requestUsers = (requestPage: number, pageSize: number): AppThunk => async (dispatch: TypedDispatch) => {
+export const requestUsers = (requestPage: number, pageSize: number): AppThunkType => async (dispatch) => {
     dispatch(toggleIsFetching(true));
     dispatch(setCurrentPage(requestPage))
     let data = await usersApi.requestUsers(requestPage, pageSize)
@@ -156,15 +156,15 @@ const _followUnfollow = async <A extends Action>(
     dispatch(toggleIsFollowingProgress(false, userId))
 }
 
-export const follow = (userId: number): AppThunk => {
-    return async (dispatch:TypedDispatch) => {
+export const follow = (userId: number): AppThunkType => {
+    return async (dispatch) => {
         let apiMethod = usersApi.follow.bind(usersApi)
         await _followUnfollow(dispatch, userId, apiMethod, followSuccess)
     }
 }
 
-export const unfollow = (userId: number): AppThunk => {
-    return async (dispatch: TypedDispatch) => {
+export const unfollow = (userId: number): AppThunkType => {
+    return async (dispatch) => {
         let apiMethod = usersApi.unfollow.bind(usersApi)
         await _followUnfollow(dispatch, userId, apiMethod, unfollowSuccess)
     }

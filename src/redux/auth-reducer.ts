@@ -1,5 +1,5 @@
 import {authApi, securityApi} from "../api/api";
-import {AppDispatch, AppThunk, TypedDispatch} from "./redux-store";
+import {AppDispatch, AppThunkType, TypedDispatch} from "./redux-store";
 import {stopSubmit} from "redux-form";
 
 export type AuthReducerACType = SetAuthUserDataType | GetCaptchaUrlSuccessType
@@ -43,7 +43,7 @@ export const getCaptchaUrlSuccess = (captchaUrl: string | null) => ({
 } as const)
 
 // Thunk
-export const getAuthUserData = (): AppThunk => async (dispatch: TypedDispatch) => {
+export const getAuthUserData = (): AppThunkType => async (dispatch) => {
     let response = await authApi.me();
     if (response.data.resultCode === 0) {
         let {id, email, login} = response.data.data
@@ -51,7 +51,7 @@ export const getAuthUserData = (): AppThunk => async (dispatch: TypedDispatch) =
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunk =>
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunkType =>
     async (dispatch: AppDispatch & TypedDispatch) => {
     let response = await authApi.login(email, password, rememberMe, captcha);
     if (response.data.resultCode === 0) {
@@ -66,14 +66,14 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     }
 }
 
-export const logout = (): AppThunk => async (dispatch: TypedDispatch) => {
+export const logout = (): AppThunkType => async (dispatch) => {
     let response = await authApi.logout()
     if (response.data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false));
     }
 }
 
-export const getCaptchaUrl = (): AppThunk => async (dispatch: TypedDispatch) => {
+export const getCaptchaUrl = (): AppThunkType => async (dispatch: TypedDispatch) => {
     const response = await securityApi.getCaptchaUrl();
     const captchaUrl = response.data.url;
     dispatch(getCaptchaUrlSuccess(captchaUrl))
