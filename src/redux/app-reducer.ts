@@ -1,16 +1,15 @@
 import {TypedDispatch} from "./redux-store";
 import {getAuthUserData} from "./auth-reducer";
-import {InitialAppStateType} from "../types/types";
 
 export type AppReducerACType =
     InitializedSuccessACType
 
 type InitializedSuccessACType = ReturnType<typeof initializedSuccess>
 
-let initialState: InitialAppStateType = {
+let initialState = {
     initialized: false
 }
-
+export type InitialAppStateType = typeof initialState
 
 export const appReducer = (state = initialState, action: AppReducerACType): InitialAppStateType => {
     switch (action.type) {

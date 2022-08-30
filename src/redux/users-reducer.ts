@@ -3,7 +3,7 @@ import {Action, Dispatch} from "redux";
 import {TypedDispatch} from "./redux-store";
 import {updateObjectInArray} from "../utils/object-helpers";
 import {AxiosResponse} from "axios";
-import {InitialUserStateType, UserType} from "../types/types";
+import {UserType} from "../types/types";
 
 export type UserReducerACType =
     FollowACType | UnFollowACType |
@@ -20,7 +20,7 @@ type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetching>
 type ToggleIsFollowingProgressACType = ReturnType<typeof toggleIsFollowingProgress>
 
 
-let initialState: InitialUserStateType = {
+let initialState = {
     users: [] as UserType[],
     pageSize: 10,
     totalUsersCount: 0,
@@ -29,7 +29,9 @@ let initialState: InitialUserStateType = {
     followingInProgress: []  as number[],
 }
 
-export const usersReducer = (state: InitialUserStateType = initialState, action: UserReducerACType): InitialUserStateType => {
+type InitialUserStateType = typeof initialState
+
+export const usersReducer = (state = initialState, action: UserReducerACType): InitialUserStateType => {
 
     switch (action.type) {
         case "USERS/FOLLOW":

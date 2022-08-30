@@ -1,7 +1,7 @@
 import {profileApi, usersApi} from "../api/api";
 import {AppRootStateType, TypedDispatch} from "./redux-store";
 import {stopSubmit} from "redux-form";
-import {InitialProfileStateType, PhotosType, PostType, ProfileType} from "../types/types";
+import { PhotosType, PostType, ProfileType} from "../types/types";
 
 export type ProfileReducerACType = AddPostACType | SetUserProfileType
     | SetStatusType | DeletePostType | SavePhotoSuccessType | SaveProfileUpdatesType
@@ -14,14 +14,16 @@ type SavePhotoSuccessType = ReturnType<typeof savePhotoSuccess>
 type SaveProfileUpdatesType = ReturnType<typeof saveProfileUpdates>
 
 
-let initialState: InitialProfileStateType = {
+let initialState= {
     posts: [
         {id: 1, message: 'Hi,how are you?', likeCounts: '5'},
         {id: 2, message: 'Yo', likeCounts: '10'},
-    ],
-    profile: null,
+    ] as PostType[],
+    profile:  null as ProfileType | null,
     status: ''
 }
+
+type InitialProfileStateType = typeof initialState
 
 export const profileReducer = (state = initialState, action: ProfileReducerACType): InitialProfileStateType => {
 
