@@ -55,7 +55,7 @@ let initialState: InitialProfileStateType = {
         {id: 1, message: 'Hi,how are you?', likeCounts: '5'},
         {id: 2, message: 'Yo', likeCounts: '10'},
     ],
-    profile: null ,
+    profile: null,
     status: ''
 }
 
@@ -89,11 +89,10 @@ export const profileReducer = (state = initialState, action: ProfileReducerACTyp
             }
         }
         case  "PROFILE/SAVE-PHOTO-SUCCESS": {
-            // @ts-ignore
-             return {...state, profile: {...state.profile, photos: action.photos }}
+            return {...state, profile: {...state.profile, photos: action.photos} as ProfileType}
         }
         case  "PROFILE/SAVE-PROFILE-UPDATES": {
-             return {...state, profile: action.profile}
+            return {...state, profile: action.profile}
         }
         default:
             return state;
@@ -119,7 +118,7 @@ export const deletePost = (postId: number) => ({
     type: "PROFILE/DELETE-POST",
     postId,
 } as const)
-export const savePhotoSuccess = (photos: PhotosType ) => ({
+export const savePhotoSuccess = (photos: PhotosType) => ({
     type: "PROFILE/SAVE-PHOTO-SUCCESS",
     photos,
 } as const)
@@ -152,14 +151,14 @@ export const savePhoto = (file: File) => async (dispatch: TypedDispatch) => {
         dispatch(savePhotoSuccess(response.data.data.photos));
     }
 }
-export const saveProfile = (profile:ProfileType) => async (dispatch:TypedDispatch, getState:() => AppRootStateType) => {
+export const saveProfile = (profile: ProfileType) => async (dispatch: TypedDispatch, getState: () => AppRootStateType) => {
     const userId = getState().auth.userId;
     const response = await profileApi.saveProfile(profile);
     if (response.data.resultCode === 0) {
         dispatch(getUserProfile(userId as unknown as string));
     } else {
         // @ts-ignore
-        dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0] }));
+        dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}));
         return Promise.reject(response.data.messages[0]);
     }
 }

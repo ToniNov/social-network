@@ -22,7 +22,7 @@ export type UserType = {
     location: { city: string, country: string }
 }
 
-export type UserReduserACType =
+export type UserReducerACType =
     FollowACType | UnFollowACType |
     SetUsersACType | SetCurrentPageACType |
     SetTotalUsersCountACType | ToggleIsFetchingACType |
@@ -46,7 +46,7 @@ let initialState: InitialUserStateType = {
     followingInProgress: []
 }
 
-export const usersReducer = (state: InitialUserStateType = initialState, action: UserReduserACType): InitialUserStateType => {
+export const usersReducer = (state: InitialUserStateType = initialState, action: UserReducerACType): InitialUserStateType => {
 
     switch (action.type) {
         case "USERS/FOLLOW":
