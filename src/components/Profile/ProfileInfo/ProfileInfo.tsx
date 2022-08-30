@@ -1,9 +1,9 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from './ProfileInfo.module.css';
 import {Preloader} from "../../common/Preloader/Preloader";
-import {ContactsType, PhotosType, ProfileType} from "../../../redux/profile-reduser";
+import {ContactsType, ProfileType} from "../../../redux/profile-reducer";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-import userPhoto from  "../../../assets/images/userPhoto.png";
+import userPhoto from "../../../assets/images/userPhoto.png";
 import ProfileDataForm from "./ProfileDataForm";
 
 type PropsType = {
@@ -38,7 +38,7 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwne
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={profile.photos.large || userPhoto} className={s.mainPhoto} />
+                <img src={profile.photos.large || userPhoto} className={s.mainPhoto}  alt="Profile Photo"/>
                 { isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
                 { editMode
                     ? <ProfileDataForm profile={profile} initialValues={profile} onSubmit = {onSubmit}/>

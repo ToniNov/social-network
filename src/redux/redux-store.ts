@@ -1,12 +1,12 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import {profileReduser, ProfileReducerACType} from "./profile-reduser";
-import {DialogReduserACType, dialogsReduser,} from "./dialogs-reduser";
-import {UserReduserACType, usersReduser} from "./users-reduser";
-import {authReduser, AuthReduserACType} from "./auth-reduser";
+import {profileReducer, ProfileReducerACType} from "./profile-reducer";
+import {DialogReduserACType, dialogsReducer,} from "./dialogs-reducer";
+import {UserReduserACType, usersReducer} from "./users-reducer";
+import {authReducer, AuthReduserACType} from "./auth-reducer";
 import thunk, {ThunkDispatch} from "redux-thunk";
 import {useDispatch} from "react-redux";
-import {reducer, reducer as formReduser} from "redux-form";
-import {appReduser, AppReduserACType} from "./app-reduser";
+import {reducer as formReduser} from "redux-form";
+import {appReducer, AppReduserACType} from "./app-reducer";
 
 
 export type StateACType =
@@ -15,13 +15,13 @@ export type StateACType =
     | AppReduserACType
 
 let rootReducer = combineReducers({
-    profilePage: profileReduser,
-    dialogsPage: dialogsReduser,
-    usersPage: usersReduser,
-    auth: authReduser,
+    profilePage: profileReducer,
+    dialogsPage: dialogsReducer,
+    usersPage: usersReducer,
+    auth: authReducer,
     form: formReduser,
-    app: appReduser,
-    //sideBar: sideBarReduser
+    app: appReducer,
+    //sideBar: sideBarReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>

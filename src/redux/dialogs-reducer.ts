@@ -30,7 +30,7 @@ let initialState :InitialDialogsStateType = {
     ],
 }
 
-export const dialogsReduser = (state:InitialDialogsStateType = initialState, action:DialogReduserACType):InitialDialogsStateType => {
+export const dialogsReducer = (state:InitialDialogsStateType = initialState, action:DialogReduserACType):InitialDialogsStateType => {
 
     switch (action.type) {
         case "SEND-MESSAGE":

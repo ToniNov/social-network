@@ -46,7 +46,7 @@ let initialState: InitialUserStateType = {
     followingInProgress: []
 }
 
-export const usersReduser = (state: InitialUserStateType = initialState, action: UserReduserACType): InitialUserStateType => {
+export const usersReducer = (state: InitialUserStateType = initialState, action: UserReduserACType): InitialUserStateType => {
 
     switch (action.type) {
         case "USERS/FOLLOW":

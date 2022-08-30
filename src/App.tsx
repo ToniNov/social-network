@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
@@ -8,7 +8,7 @@ import Settings from "./components/Settings/Settings";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
-import {initializeApp} from "./redux/app-reduser";
+import {initializeApp} from "./redux/app-reducer";
 import {AppStateType, store} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
@@ -85,7 +85,7 @@ let AppContainer = compose<React.FC>(
     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
         {initializeApp}))(App)
 
-let RootAppSocialNetwork = (props: any) => {
+let RootAppSocialNetwork = () => {
     return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>

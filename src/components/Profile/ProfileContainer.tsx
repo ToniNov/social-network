@@ -5,11 +5,13 @@ import {AppStateType} from "../../redux/redux-store";
 import {
     addPost,
     getStatus,
-    getUserProfile, PhotosType,
-    ProfileType, savePhoto, saveProfile,
+    getUserProfile,
+    ProfileType,
+    savePhoto,
+    saveProfile,
     updateStatus
-} from "../../redux/profile-reduser";
-import { RouteComponentProps, withRouter} from "react-router-dom";
+} from "../../redux/profile-reducer";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
@@ -56,7 +58,7 @@ class ProfileContainer extends React.Component<PropsType> {
             />
         );
     };
-};
+}
 
 type MapStateToPropsType = {
     profile: null | ProfileType

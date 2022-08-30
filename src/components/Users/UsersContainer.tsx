@@ -8,7 +8,7 @@ import {
     toggleIsFollowingProgress,
     unfollow,
     UserType
-} from "../../redux/users-reduser";
+} from "../../redux/users-reducer";
 import Users from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {compose} from "redux";

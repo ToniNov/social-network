@@ -1,5 +1,5 @@
 import { TypedDispatch} from "./redux-store";
-import {getAuthUserData} from "./auth-reduser";
+import {getAuthUserData} from "./auth-reducer";
 
 export type InitialAppStateType = {
     initialized:boolean
@@ -15,7 +15,7 @@ let initialState: InitialAppStateType = {
 }
 
 
-export const appReduser = (state: InitialAppStateType = initialState, action: AppReduserACType):InitialAppStateType=> {
+export const appReducer = (state: InitialAppStateType = initialState, action: AppReduserACType):InitialAppStateType=> {
     switch (action.type) {
         case "APP/INITIALIZED-SUCCESS":
             return {

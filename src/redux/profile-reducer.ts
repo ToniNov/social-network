@@ -59,7 +59,7 @@ let initialState: InitialProfileStateType = {
     status: ''
 }
 
-export const profileReduser = (state = initialState, action: ProfileReducerACType): InitialProfileStateType => {
+export const profileReducer = (state = initialState, action: ProfileReducerACType): InitialProfileStateType => {
 
     switch (action.type) {
         case "PROFILE/ADD-POST":

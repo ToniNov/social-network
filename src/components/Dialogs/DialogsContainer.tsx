@@ -1,8 +1,5 @@
-import React, {ChangeEvent} from 'react';
-import {
-    DialogType,
-    MessageType, sendMessage,
-} from "../../redux/dialogs-reduser";
+import React from 'react';
+import {DialogType, MessageType, sendMessage,} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";

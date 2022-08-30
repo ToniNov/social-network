@@ -1,5 +1,4 @@
-import {addPost, deletePost, profileReduser} from "./profile-reduser";
-
+import {addPost, deletePost, profileReducer} from "./profile-reducer";
 
 let state = {
     posts: [
@@ -10,27 +9,27 @@ let state = {
     status: ''
 }
 
-it('length of post should be incremented ', ()=> {
+it('length of post should be incremented ', () => {
 
     let action = addPost('Hello World')
-    let newState = profileReduser(state,action);
+    let newState = profileReducer(state, action);
 
     expect(newState.posts.length).toBe(3)
 
 });
 
-it('message of new post should be Hello World ', ()=> {
+it('message of new post should be Hello World ', () => {
 
     let action = addPost('Hello World')
-    let newState = profileReduser(state,action);
+    let newState = profileReducer(state, action);
 
     expect(newState.posts[2].message).toBe('Hello World')
 });
 
-it('length after deleting should be decrement ', ()=> {
+it('length after deleting should be decrement ', () => {
 
     let action = deletePost(1)
-    let newState = profileReduser(state,action);
+    let newState = profileReducer(state, action);
 
     expect(newState.posts.length).toBe(1)
 });

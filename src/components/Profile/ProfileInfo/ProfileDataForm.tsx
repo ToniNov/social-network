@@ -1,6 +1,6 @@
 import React from "react";
-import {ProfileType} from "../../../redux/profile-reduser";
-import {createField, GetStringKeys, Input, Textarea} from "../../common/FormsControls/FormsControls";
+import {ProfileType} from "../../../redux/profile-reducer";
+import {createField, Input, Textarea} from "../../common/FormsControls/FormsControls";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import s from "../../common/FormsControls/FormsControls.module.css";
 
