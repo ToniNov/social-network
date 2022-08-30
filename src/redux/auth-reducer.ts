@@ -11,11 +11,10 @@ export type InitialAuthStateType = {
     captchaUrl: string | null
 }
 
-export type AuthReduserACType = SetAuthUserDataType | GetCaptchaUrlSuccessType
+export type AuthReducerACType = SetAuthUserDataType | GetCaptchaUrlSuccessType
 
 type SetAuthUserDataType = ReturnType<typeof setAuthUserData>
 type GetCaptchaUrlSuccessType = ReturnType<typeof getCaptchaUrlSuccess>
-
 
 let initialState: InitialAuthStateType = {
     userId: null,
@@ -27,7 +26,7 @@ let initialState: InitialAuthStateType = {
 }
 
 
-export const authReducer = (state: InitialAuthStateType = initialState, action: AuthReduserACType): InitialAuthStateType => {
+export const authReducer = (state = initialState, action: AuthReducerACType): InitialAuthStateType => {
 
     switch (action.type) {
         case "AUTH/SET-AUTH-USER-DATA":

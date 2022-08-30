@@ -2,17 +2,17 @@ import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {profileReducer, ProfileReducerACType} from "./profile-reducer";
 import {DialogReduserACType, dialogsReducer,} from "./dialogs-reducer";
 import {UserReduserACType, usersReducer} from "./users-reducer";
-import {authReducer, AuthReduserACType} from "./auth-reducer";
+import {authReducer, AuthReducerACType} from "./auth-reducer";
 import thunk, {ThunkDispatch} from "redux-thunk";
 import {useDispatch} from "react-redux";
 import {reducer as formReduser} from "redux-form";
-import {appReducer, AppReduserACType} from "./app-reducer";
+import {appReducer, AppReducerACType} from "./app-reducer";
 
 
 export type StateACType =
     UserReduserACType | ProfileReducerACType
-    | DialogReduserACType | AuthReduserACType
-    | AppReduserACType
+    | DialogReduserACType | AuthReducerACType
+    | AppReducerACType
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
