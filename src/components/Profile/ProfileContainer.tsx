@@ -1,19 +1,12 @@
 import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/redux-store";
-import {
-    addPost,
-    getStatus,
-    getUserProfile,
-    savePhoto,
-    saveProfile,
-    updateStatus
-} from "../../redux/profile-reducer";
+import {AppRootStateType} from "../../redux/redux-store";
+import {addPost, getStatus, getUserProfile, savePhoto, saveProfile, updateStatus} from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
-import { ProfileType } from '../../types/types';
+import {ProfileType} from '../../types/types';
 
 type  ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -76,7 +69,7 @@ type MapDispatchToPropsType = {
     saveProfile: (profile: ProfileType) => void
 };
 
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
+let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,
@@ -84,7 +77,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
 });
 
 export default compose<React.ComponentType>(
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType >(mapStateToProps,
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppRootStateType >(mapStateToProps,
         {addPost, getUserProfile,getStatus, updateStatus, savePhoto, saveProfile}),
     withRouter,
     withAuthRedirect

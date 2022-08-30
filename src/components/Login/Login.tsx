@@ -5,8 +5,8 @@ import {required} from "../../utils/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
-import {AppStateType} from "../../redux/redux-store";
 import s from "./../common/FormsControls/FormsControls.module.css"
+import {AppRootStateType} from "../../redux/redux-store";
 
 
 type LoginFormOwnProps = {
@@ -70,7 +70,7 @@ type MapStateToPropsType = {
     captchaUrl: string | null
 }
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     isAuth : state.auth.isAuth,
     captchaUrl: state.auth.captchaUrl
 })

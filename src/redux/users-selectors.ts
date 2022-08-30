@@ -1,21 +1,20 @@
-import {AppStateType} from "./redux-store";
+import {AppRootStateType} from "./redux-store";
 
-// Спросить правильно или нет
-export const  getUsers =(state:AppStateType) => {
+export const  getUsers =(state:AppRootStateType) => {
     return state.usersPage.users
 }
-export const getPageSize=(state:AppStateType) => {
+export const getPageSize=(state:AppRootStateType) => {
     return state.usersPage.pageSize
 }
-export const getTotalUsersCount = (state:AppStateType) => {
+export const getTotalUsersCount = (state:AppRootStateType) => {
     return state.usersPage.totalUsersCount
 }
-export const getCurrentPage = (state:AppStateType) => {
+export const getCurrentPage = (state:AppRootStateType) => {
     return state.usersPage.currentPage
 }
-export const getIsFetching = (state:AppStateType) => {
+export const getIsFetching = (state:AppRootStateType) => {
     return state.usersPage.isFetching
 }
-export const getFollowingInProgress = (state:AppStateType)  => {
+export const getFollowingInProgress = (state:AppRootStateType)  => {
     return state.usersPage.followingInProgress
 }

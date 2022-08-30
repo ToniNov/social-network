@@ -9,7 +9,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
-import {AppStateType, store} from "./redux/redux-store";
+import {AppRootStateType, store} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
 
@@ -78,11 +78,11 @@ type  MapStateToPropsType = {
     initialized: boolean
 }
 
-let mapStateToProps = (state:AppStateType) : MapStateToPropsType =>({ initialized : state.app.initialized})
+let mapStateToProps = (state:AppRootStateType) : MapStateToPropsType =>({ initialized : state.app.initialized})
 
 let AppContainer = compose<React.FC>(
     withRouter,
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps,
         {initializeApp}))(App)
 
 let RootAppSocialNetwork = () => {
