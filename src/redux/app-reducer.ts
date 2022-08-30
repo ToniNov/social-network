@@ -1,4 +1,4 @@
-import {TypedDispatch} from "./redux-store";
+import {AppThunk, TypedDispatch} from "./redux-store";
 import {getAuthUserData} from "./auth-reducer";
 
 export type AppReducerACType =
@@ -30,7 +30,7 @@ export const initializedSuccess = (initialized: boolean) => {
     } as const
 }
 
-export const initializeApp = (initialized: boolean) => (dispatch: TypedDispatch) => {
+export const initializeApp = (initialized: boolean): AppThunk => (dispatch: TypedDispatch) => {
     dispatch(getAuthUserData())
     Promise.all([Promise])
         .then(() => {

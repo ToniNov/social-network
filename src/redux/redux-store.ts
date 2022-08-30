@@ -3,13 +3,12 @@ import {profileReducer, ProfileReducerACType} from "./profile-reducer";
 import {DialogReducerACType, dialogsReducer,} from "./dialogs-reducer";
 import {UserReducerACType, usersReducer} from "./users-reducer";
 import {authReducer, AuthReducerACType} from "./auth-reducer";
-import thunk, {ThunkDispatch} from "redux-thunk";
+import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {useDispatch} from "react-redux";
 import {reducer as formReduser} from "redux-form";
 import {appReducer, AppReducerACType} from "./app-reducer";
 
-
-export type StateACType =
+export type AppActionType =
     UserReducerACType | ProfileReducerACType
     | DialogReducerACType | AuthReducerACType
     | AppReducerACType
@@ -35,11 +34,13 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
-export type AppActionType = StateACType
+
 export type AppDispatch = typeof store.dispatch
-export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>
 
 export const useTypedDispatch = () => useDispatch<TypedDispatch>()
+export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>
+
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
 
 // @ts-ignore
 window.__store__ = store;

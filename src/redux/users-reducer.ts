@@ -1,6 +1,6 @@
 import {usersApi} from "../api/api";
 import {Action, Dispatch} from "redux";
-import {TypedDispatch} from "./redux-store";
+import {AppThunk, TypedDispatch} from "./redux-store";
 import {updateObjectInArray} from "../utils/object-helpers";
 import {AxiosResponse} from "axios";
 import {UserType} from "../types/types";
@@ -130,7 +130,7 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) =
     } as const
 }
 
-export const requestUsers = (requestPage: number, pageSize: number) => async (dispatch: TypedDispatch) => {
+export const requestUsers = (requestPage: number, pageSize: number): AppThunk => async (dispatch: TypedDispatch) => {
     dispatch(toggleIsFetching(true));
     dispatch(setCurrentPage(requestPage))
     let data = await usersApi.requestUsers(requestPage, pageSize)
@@ -142,7 +142,7 @@ export const requestUsers = (requestPage: number, pageSize: number) => async (di
 type ActionCreator<A extends  Action> = (...args: any[]) => A
 type FollowUnfollowApiMethod = (userId: number) => Promise<AxiosResponse<any, any>>
 
-const followUnfollow = async <A extends Action>(
+const _followUnfollow = async <A extends Action>(
     dispatch: Dispatch,
     userId: number,
     apiMethod: FollowUnfollowApiMethod,
@@ -156,16 +156,16 @@ const followUnfollow = async <A extends Action>(
     dispatch(toggleIsFollowingProgress(false, userId))
 }
 
-export const follow = (userId: number) => {
-    return async (dispatch: Dispatch) => {
+export const follow = (userId: number): AppThunk => {
+    return async (dispatch:TypedDispatch) => {
         let apiMethod = usersApi.follow.bind(usersApi)
-        await followUnfollow(dispatch, userId, apiMethod, followSuccess)
+        await _followUnfollow(dispatch, userId, apiMethod, followSuccess)
     }
 }
 
-export const unfollow = (userId: number) => {
-    return async (dispatch: Dispatch) => {
+export const unfollow = (userId: number): AppThunk => {
+    return async (dispatch: TypedDispatch) => {
         let apiMethod = usersApi.unfollow.bind(usersApi)
-        await followUnfollow(dispatch, userId, apiMethod, unfollowSuccess)
+        await _followUnfollow(dispatch, userId, apiMethod, unfollowSuccess)
     }
 }
