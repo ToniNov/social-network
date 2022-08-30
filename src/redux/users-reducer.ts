@@ -130,7 +130,6 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) =
     } as const
 }
 
-
 export const requestUsers = (requestPage: number, pageSize: number) => async (dispatch: TypedDispatch) => {
     dispatch(toggleIsFetching(true));
     dispatch(setCurrentPage(requestPage))
@@ -160,7 +159,7 @@ const followUnfollow = async <A extends Action>(
 export const follow = (userId: number) => {
     return async (dispatch: Dispatch) => {
         let apiMethod = usersApi.follow.bind(usersApi)
-        followUnfollow(dispatch, userId, apiMethod, followSuccess)
+        await followUnfollow(dispatch, userId, apiMethod, followSuccess)
     }
 }
 
