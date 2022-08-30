@@ -1,15 +1,7 @@
 import {authApi, securityApi} from "../api/api";
 import {AppDispatch, TypedDispatch} from "./redux-store";
 import {stopSubmit} from "redux-form";
-
-export type InitialAuthStateType = {
-    userId: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean
-    isFetching: boolean
-    captchaUrl: string | null
-}
+import {InitialAuthStateType} from "../types/types";
 
 export type AuthReducerACType = SetAuthUserDataType | GetCaptchaUrlSuccessType
 
@@ -17,14 +9,13 @@ type SetAuthUserDataType = ReturnType<typeof setAuthUserData>
 type GetCaptchaUrlSuccessType = ReturnType<typeof getCaptchaUrlSuccess>
 
 let initialState: InitialAuthStateType = {
-    userId: null,
-    email: null,
-    login: null,
+    userId: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
     isAuth: false,
     isFetching: false,
-    captchaUrl: null
+    captchaUrl: null as string | null
 }
-
 
 export const authReducer = (state = initialState, action: AuthReducerACType): InitialAuthStateType => {
 

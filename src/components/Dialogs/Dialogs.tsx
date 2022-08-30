@@ -2,10 +2,10 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from "./DialogsItem/DialogsItem";
 import {Message} from "./Message/Message";
-import {DialogType, MessageType} from "../../redux/dialogs-reducer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators";
+import {DialogType, MessageType} from "../../types/types";
 
 
 type DialogsPropsType = {
@@ -17,7 +17,7 @@ const Dialogs = (props: DialogsPropsType) => {
 
     let dialogsElements = props.dialogs.map((d) => <DialogItem key={d.id} name={d.name} id={d.id}/>)
     let messagesElements = props.messages.map((m) => <Message key={m.id} message={m.message} id={m.id}/>)
-    // спросить!!
+
     let addNewMessage = (values:any) => {
         props.sendMessage(values.newMessageBody)
     }

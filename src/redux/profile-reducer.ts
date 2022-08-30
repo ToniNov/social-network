@@ -1,43 +1,7 @@
 import {profileApi, usersApi} from "../api/api";
 import {AppRootStateType, TypedDispatch} from "./redux-store";
 import {stopSubmit} from "redux-form";
-
-export type InitialProfileStateType = {
-    posts: Array<PostType>
-    profile: null | ProfileType
-    status: string
-}
-
-export type PostType = {
-    id: number
-    message: string
-    likeCounts: string
-}
-
-export type ProfileType = {
-    photos: PhotosType
-    aboutMe: string
-    contacts: ContactsType
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    userId: number
-}
-export type  ContactsType = {
-    facebook: null | string
-    website: null | string
-    vk: null | string
-    twitter: null | string
-    instagram: null | string
-    youtube: null | string
-    github: null | string
-    mainLink: null | string
-}
-
-export type PhotosType = {
-    small: string
-    large: string
-}
+import {InitialProfileStateType, PhotosType, PostType, ProfileType} from "../types/types";
 
 export type ProfileReducerACType = AddPostACType | SetUserProfileType
     | SetStatusType | DeletePostType | SavePhotoSuccessType | SaveProfileUpdatesType

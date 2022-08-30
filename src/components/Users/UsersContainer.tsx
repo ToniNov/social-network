@@ -7,7 +7,6 @@ import {
     setCurrentPage,
     toggleIsFollowingProgress,
     unfollow,
-    UserType
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
@@ -20,6 +19,7 @@ import {
     getPageSize,
     getTotalUsersCount, getUsers,
 } from "../../redux/users-selectors";
+import {UserType} from "../../types/types";
 
 class UsersContainer extends React.Component<UsersPropsType> {
 

@@ -1,28 +1,17 @@
+import {DialogType, InitialDialogsStateType, MessageType} from "../types/types";
+
 export type DialogReducerACType =  sendMessageACType
 
 type sendMessageACType = ReturnType<typeof sendMessage>
 
-export type DialogType = {
-    id: number
-    name: string
-}
 
-export type MessageType = {
-    id: number
-    message: string
-}
-
-export type InitialDialogsStateType = {
-    dialogs: DialogType[]
-    messages: MessageType[]
-}
 
 let initialState :InitialDialogsStateType = {
     dialogs: [
         {id: 1, name: "Anton"},
         {id: 2, name: "Bob"},
         {id: 3, name: "Jon"},
-    ] as DialogType[] ,
+    ] as DialogType[],
     messages: [
         {id: 1, message: "Hi"},
         {id: 2, message: "Yo"},

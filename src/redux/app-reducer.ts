@@ -1,9 +1,6 @@
 import {TypedDispatch} from "./redux-store";
 import {getAuthUserData} from "./auth-reducer";
-
-export type InitialAppStateType = {
-    initialized: boolean
-}
+import {InitialAppStateType} from "../types/types";
 
 export type AppReducerACType =
     InitializedSuccessACType

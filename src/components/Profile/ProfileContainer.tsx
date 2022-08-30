@@ -6,7 +6,6 @@ import {
     addPost,
     getStatus,
     getUserProfile,
-    ProfileType,
     savePhoto,
     saveProfile,
     updateStatus
@@ -14,6 +13,7 @@ import {
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import { ProfileType } from '../../types/types';
 
 type  ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 

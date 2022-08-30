@@ -3,24 +3,7 @@ import {Action, Dispatch} from "redux";
 import {TypedDispatch} from "./redux-store";
 import {updateObjectInArray} from "../utils/object-helpers";
 import {AxiosResponse} from "axios";
-
-export type InitialUserStateType = {
-    users: Array<UserType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followingInProgress: number[]
-}
-
-export type UserType = {
-    id: number
-    photos: { small: string }
-    followed: boolean
-    name: string
-    status: string
-    location: { city: string, country: string }
-}
+import {InitialUserStateType, UserType} from "../types/types";
 
 export type UserReducerACType =
     FollowACType | UnFollowACType |
@@ -38,12 +21,12 @@ type ToggleIsFollowingProgressACType = ReturnType<typeof toggleIsFollowingProgre
 
 
 let initialState: InitialUserStateType = {
-    users: [],
+    users: [] as UserType[],
     pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: []  as number[],
 }
 
 export const usersReducer = (state: InitialUserStateType = initialState, action: UserReducerACType): InitialUserStateType => {
