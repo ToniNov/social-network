@@ -28,7 +28,6 @@ declare global {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
     }
 }
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
@@ -41,6 +40,8 @@ export const useTypedDispatch = () => useDispatch<TypedDispatch>()
 export type TypedDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>
 
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
+
+export type InferActionsTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
 
 // @ts-ignore
 window.__store__ = store;

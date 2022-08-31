@@ -4,8 +4,6 @@ import {AppRootStateType} from "../../redux/redux-store";
 import {
     follow,
     requestUsers,
-    setCurrentPage,
-    toggleIsFollowingProgress,
     unfollow,
 } from "../../redux/users-reducer";
 import Users from "./Users";
@@ -64,8 +62,6 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    setCurrentPage: (pageNumber: number) => void
-    toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
     requestUsers: (currentPage: number, pageSize: number) => void
 }
 
@@ -83,7 +79,5 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 }
 
 export default compose<React.ComponentType>(
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps,
-        {follow, unfollow, setCurrentPage, toggleIsFollowingProgress, requestUsers}),
-    withAuthRedirect
-)(UsersContainer)
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppRootStateType>
+    (mapStateToProps, {follow, unfollow,requestUsers}))(UsersContainer)
