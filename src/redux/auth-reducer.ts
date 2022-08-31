@@ -1,7 +1,8 @@
-import {ResultCodeCaptchaEnum, ResultCodesEnum, securityApi} from "../api/api";
+import {ResultCodeCaptchaEnum, ResultCodesEnum} from "../api/api";
 import {AppDispatch, AppThunkType, TypedDispatch} from "./redux-store";
 import {stopSubmit} from "redux-form";
 import {authApi} from "../api/auth-api";
+import {securityApi} from "../api/security-api";
 
 export type AuthReducerACType = SetAuthUserDataType | GetCaptchaUrlSuccessType
 
@@ -74,8 +75,8 @@ export const logout = (): AppThunkType => async (dispatch) => {
 }
 
 export const getCaptchaUrl = (): AppThunkType => async (dispatch) => {
-    const response = await securityApi.getCaptchaUrl();
-    const captchaUrl = response.data.url;
+    const data = await securityApi.getCaptchaUrl();
+    const captchaUrl = data.url;
     dispatch(getCaptchaUrlSuccess(captchaUrl))
 }
 

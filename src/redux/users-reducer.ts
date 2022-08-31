@@ -1,9 +1,9 @@
-import {usersApi} from "../api/api";
 import {Action, Dispatch} from "redux";
-import {AppThunkType, TypedDispatch} from "./redux-store";
+import {AppThunkType} from "./redux-store";
 import {updateObjectInArray} from "../utils/object-helpers";
-import {AxiosResponse} from "axios";
 import {UserType} from "../types/types";
+import {usersApi} from "../api/users-api";
+import {APIResponseType} from "../api/api";
 
 export type UserReducerACType =
     FollowACType | UnFollowACType |
@@ -140,7 +140,7 @@ export const requestUsers = (requestPage: number, pageSize: number): AppThunkTyp
 }
 
 type ActionCreator<A extends  Action> = (...args: any[]) => A
-type FollowUnfollowApiMethod = (userId: number) => Promise<AxiosResponse<any, any>>
+type FollowUnfollowApiMethod = (userId: number) => Promise<APIResponseType>
 
 const _followUnfollow = async <A extends Action>(
     dispatch: Dispatch,
@@ -150,7 +150,8 @@ const _followUnfollow = async <A extends Action>(
 ) => {
     dispatch(toggleIsFollowingProgress(true, userId));
     let response = await apiMethod(userId);
-    if (response.data.resultCode == 0) {
+
+    if (response.resultCode == 0) {
         dispatch(actionCreator(userId))
     }
     dispatch(toggleIsFollowingProgress(false, userId))
