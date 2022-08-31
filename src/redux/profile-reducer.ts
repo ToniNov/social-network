@@ -1,7 +1,5 @@
 import {AppThunkType} from "./redux-store";
-import {stopSubmit} from "redux-form";
 import {PhotosType, PostType, ProfileType} from "../types/types";
-import {usersApi} from "../api/users-api";
 import {profileApi} from "../api/profile-api";
 
 export type ProfileReducerACType = AddPostACType | SetUserProfileType
