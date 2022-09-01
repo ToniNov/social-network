@@ -3,12 +3,12 @@ import {PhotosType, PostType, ProfileType} from "../types/types";
 import {profileApi} from "../api/profile-api";
 import {FormAction, stopSubmit} from "redux-form";
 
-let initialState= {
+let initialState = {
     posts: [
         {id: 1, message: 'Hi,how are you?', likeCounts: '5'},
         {id: 2, message: 'Yo', likeCounts: '10'},
     ] as PostType[],
-    profile:  null as ProfileType | null,
+    profile: null as ProfileType | null,
     status: ''
 }
 
@@ -57,7 +57,6 @@ export const actions = {
     savePhotoSuccess: (photos: PhotosType) => ({type: 'SN/PROFILE/SAVE-PHOTO-SUCCESS', photos} as const)
 }
 
-
 export const getUserProfile = (userId: number): ThunkType => async (dispatch) => {
     const data = await profileApi.getProfile(userId)
     dispatch(actions.setUserProfile(data))
@@ -92,7 +91,7 @@ export const saveProfile = (profile: ProfileType): ThunkType => async (dispatch,
             throw new Error("userId can't be null")
         }
     } else {
-        dispatch(stopSubmit("edit-profile", {_error: data.messages[0] }))
+        dispatch(stopSubmit("edit-profile", {_error: data.messages[0]}))
         return Promise.reject(data.messages[0])
     }
 }
