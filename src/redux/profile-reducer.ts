@@ -2,6 +2,7 @@ import {BaseThunkType, InferActionsTypes} from "./redux-store";
 import {PhotosType, PostType, ProfileType} from "../types/types";
 import {profileApi} from "../api/profile-api";
 import {FormAction, stopSubmit} from "redux-form";
+import {ResultCodesEnum} from "../api/api";
 
 let initialState = {
     posts: [
@@ -68,15 +69,20 @@ export const getStatus = (userId: string): ThunkType => async (dispatch) => {
 };
 
 export const updateStatus = (status: string): ThunkType => async (dispatch) => {
-    let response = await profileApi.updateStatus(status)
-    if (response.resultCode === 0) {
-        dispatch(actions.setStatus(status));
+    try {
+        let data = await profileApi.updateStatus(status)
+
+        if (data.resultCode === ResultCodesEnum.Success) {
+            dispatch(actions.setStatus(status))
+        }
+    } catch(error) {
+        /// !!! add error
     }
-};
+}
 export const savePhoto = (file: File): ThunkType => async (dispatch) => {
-    let response = await profileApi.savePhoto(file);
-    if (response.resultCode === 0) {
-        dispatch(actions.savePhotoSuccess(response.data.photos));
+    let data = await profileApi.savePhoto(file);
+    if (data.resultCode === ResultCodesEnum.Success) {
+        dispatch(actions.savePhotoSuccess(data.data.photos));
     }
 }
 export const saveProfile = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
@@ -84,7 +90,7 @@ export const saveProfile = (profile: ProfileType): ThunkType => async (dispatch,
     const userId = getState().auth.userId;
     const data = await profileApi.saveProfile(profile);
 
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodesEnum.Success) {
         if (userId != null) {
             dispatch(getUserProfile(userId))
         } else {
