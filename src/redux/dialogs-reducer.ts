@@ -14,7 +14,6 @@ let initialState = {
 }
 
 export const dialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
-
     switch (action.type) {
         case "SN/DIALOGS/SEND-MESSAGE":
             let body = action.newMessageBody
