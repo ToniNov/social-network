@@ -10,7 +10,8 @@ let initialState = {
         {id: 2, message: 'Yo', likeCounts: '10'},
     ] as PostType[],
     profile: null as ProfileType | null,
-    status: ''
+    status: '',
+    newPostText: ''
 }
 
 export const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -75,7 +76,7 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
         if (data.resultCode === ResultCodesEnum.Success) {
             dispatch(actions.setStatus(status))
         }
-    } catch(error) {
+    } catch (error) {
         /// !!! add error
     }
 }
