@@ -20,7 +20,7 @@ export const authApi = {
             .then(res => res.data)
     },
     logout() {
-        return instance.delete<APIResponseType<{}>>(`auth/login`)
+        return instance.delete(`auth/login`)
             .then(res => res.data)
     },
 }
