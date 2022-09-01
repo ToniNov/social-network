@@ -18,13 +18,16 @@ const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileCo
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const LoginPage = React.lazy(() => import("./components/Login/Login"));
 
-type AppPropsType = {
-    initializeApp: () => void
+type PropsType = MapPropsType & DispatchToPropsType
+
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchToPropsType = {
+    initializeApp:() => void
 }
 
-class App extends React.Component<AppPropsType> {
-    catchAllUnhandledErrors = (promiseRejectionEvent: any) =>{
-        alert(promiseRejectionEvent)
+class App extends React.Component<PropsType> {
+    catchAllUnhandledErrors = (e: PromiseRejectionEvent) =>{
+        alert("Some error occured")
     }
     componentDidMount() {
         this.props.initializeApp()
@@ -70,22 +73,15 @@ class App extends React.Component<AppPropsType> {
     }
 }
 
-type MapDispatchToPropsType = {
-    initializeApp:(initialized: boolean) => void
-}
 
-type  MapStateToPropsType = {
-    initialized: boolean
-}
+let mapStateToProps = (state:AppRootStateType) =>({ initialized : state.app.initialized})
 
-let mapStateToProps = (state:AppRootStateType) : MapStateToPropsType =>({ initialized : state.app.initialized})
-
-let AppContainer = compose<React.FC>(
+let AppContainer = compose<React.ComponentType>(
     withRouter,
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps,
+    connect<MapPropsType, DispatchToPropsType, {}, AppRootStateType>(mapStateToProps,
         {initializeApp}))(App)
 
-let RootAppSocialNetwork = () => {
+let RootAppSocialNetwork : React.FC = () => {
     return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
