@@ -7,7 +7,6 @@ let state = {
     ],
     profile: null,
     status: '',
-    newPostText: ''
 }
 
 it('length of post should be incremented ', () => {

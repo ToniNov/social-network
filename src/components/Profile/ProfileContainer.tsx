@@ -13,7 +13,7 @@ type MapDispatchToPropsType = {
     updateStatus:(status:string) => void
     savePhoto: (file: File ) => void
     saveProfile: (profile: ProfileType) => Promise<any>
-};
+}
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 
@@ -43,7 +43,7 @@ class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         this.refreshProfile()
-    };
+    }
 
     componentDidUpdate(prevProps: PropsType, prevState: PropsType, snapshot?: any) {
         if (this.props.match.params.userId != prevProps.match.params.userId){
@@ -63,8 +63,8 @@ class ProfileContainer extends React.Component<PropsType> {
                      savePhoto = {this.props.savePhoto}
                      saveProfile = {this.props.saveProfile}
             />
-        );
-    };
+        )
+    }
 }
 
 
