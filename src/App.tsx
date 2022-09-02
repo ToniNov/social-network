@@ -12,11 +12,12 @@ import {initializeApp} from "./redux/app-reducer";
 import {AppRootStateType, store} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
+import Login from "./components/Login/Login";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
-const LoginPage = React.lazy(() => import("./components/Login/Login"));
+ const LoginPage = React.lazy(() => import("./components/Login/Login"));
 
 type PropsType = MapPropsType & DispatchToPropsType
 
@@ -58,6 +59,8 @@ class App extends React.Component<PropsType> {
                            render = {() => withSuspense(UsersContainer)}/>
                     <Route path={'/login'}
                            render = {() => withSuspense(LoginPage)}/>
+                    {/*<Route path='/login'*/}
+                    {/*       render={() => <Login/>}/>*/}
                     <Route path={'/news'}
                            render = {() => withSuspense(News)}/>
                     <Route path={'/music'}
