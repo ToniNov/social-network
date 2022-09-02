@@ -12,7 +12,7 @@ type MapDispatchToPropsType = {
     getStatus:(userId:string) =>void
     updateStatus:(status:string) => void
     savePhoto: (file: File ) => void
-    saveProfile: (profile: ProfileType) => void
+    saveProfile: (profile: ProfileType) => Promise<any>
 };
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
@@ -61,7 +61,6 @@ class ProfileContainer extends React.Component<PropsType> {
                      status={this.props.status}
                      updateStatus={this.props.updateStatus}
                      savePhoto = {this.props.savePhoto}
-                     // @ts-ignore
                      saveProfile = {this.props.saveProfile}
             />
         );
