@@ -2,7 +2,6 @@ import React from "react";
 import { create } from "react-test-renderer";
 import {Paginator} from "./Paginator";
 
-
 const component = create(<Paginator
     totalItemsCount={11}
     pageSize={1}
