@@ -1,9 +1,9 @@
 import {APIResponseType, GetItemsType, instance} from "./api";
 
 export const usersApi = {
-    requestUsers(currentPage: number, pageSize: number) {
-        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`)
-            .then(res => res.data);
+    requestUsers(currentPage = 1, pageSize = 10, term: string = '', friend: null | boolean = null) {
+        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null ? '' : `&friend=${friend}`) )
+            .then(res => res.data)
     },
     follow(userId: number) {
         return instance.post<APIResponseType>(`follow/${userId}`).then(res => res.data)
