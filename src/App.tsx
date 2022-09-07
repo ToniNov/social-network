@@ -12,12 +12,12 @@ import {initializeApp} from "./redux/app-reducer";
 import {AppRootStateType, store} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
-import Login from "./components/Login/Login";
+
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
-const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
- const LoginPage = React.lazy(() => import("./components/Login/Login"));
+const UsersPage = React.lazy(() => import("./components/Users/UsersPage"));
+const LoginPage = React.lazy(() => import("./components/Login/Login"));
 
  const NotFound = () => <div>404 Not found</div>;
 
@@ -29,9 +29,11 @@ type DispatchToPropsType = {
 }
 
 class App extends React.Component<PropsType> {
+
     catchAllUnhandledErrors = (e: PromiseRejectionEvent) =>{
         alert("Some error occured")
     }
+
     componentDidMount() {
         this.props.initializeApp()
         window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
@@ -59,7 +61,7 @@ class App extends React.Component<PropsType> {
                        <Route exact path={'/profile/:userId?'}
                               render = {() => withSuspense(ProfileContainer)}/>
                        <Route exact path={'/users'}
-                              render = {() => withSuspense(UsersContainer)}/>
+                              render = {() => withSuspense(UsersPage)}/>
                        <Route exact path={'/login'}
                               render = {() => withSuspense(LoginPage)}/>
                        <Route exact path={'/news'}
