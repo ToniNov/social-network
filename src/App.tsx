@@ -17,7 +17,7 @@ import {withSuspense} from "./hoc/withSuspense";
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 const UsersPage = React.lazy(() => import("./components/Users/UsersPage"));
-const LoginPage = React.lazy(() => import("./components/Login/Login"));
+const LoginPage = React.lazy(() => import("./components/Login/LoginPage"));
 
  const NotFound = () => <div>404 Not found</div>;
 

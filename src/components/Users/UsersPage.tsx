@@ -21,5 +21,5 @@ const UsersPage: React.FC<PropsType> = (props) => {
     )
 }
 
-export default UsersPage
+export default UsersPage;
 
