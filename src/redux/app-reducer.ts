@@ -22,7 +22,7 @@ export const actions = {
     initializedSuccess: () => ({type: "SN/APP/INITIALIZED-SUCCESS"} as const)
 }
 
-//  ADD TYPE !!!!!!!!!
+// TODO ADD TYPE !!!!!!!!!
 export const initializeApp = () => (dispatch:any) => {
     dispatch(getAuthUserData())
     Promise.all([Promise])

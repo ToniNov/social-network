@@ -9,7 +9,7 @@ const LoginPage: React.FC = (props) => {
 
     const captchaUrl = useSelector(getCaptchaUrl)
     const isAuth = useSelector(getIsAuth)
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const onSubmit = (formData: LoginFormValuesType) => {
         dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))

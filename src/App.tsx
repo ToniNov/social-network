@@ -19,7 +19,7 @@ const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileCo
 const UsersPage = React.lazy(() => import("./components/Users/UsersPage"));
 const LoginPage = React.lazy(() => import("./components/Login/LoginPage"));
 
- const NotFound = () => <div>404 Not found</div>;
+const NotFound = () => <div>404 Not found</div>;
 
 type PropsType = MapPropsType & DispatchToPropsType
 

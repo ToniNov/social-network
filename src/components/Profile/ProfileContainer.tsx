@@ -1,11 +1,12 @@
 import React from 'react';
 import Profile from "./Profile";
-import {connect} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
 import {getStatus, getUserProfile, savePhoto, saveProfile, updateStatus} from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {ProfileType} from '../../types/types';
+import {getIsAuth} from "../../redux/users-selectors";
 
 type MapDispatchToPropsType = {
     getUserProfile: (userId: string) =>  void
@@ -22,6 +23,24 @@ type PathParamsType = {
 }
 
 type PropsType = RouteComponentProps<PathParamsType> & MapPropsType & MapDispatchToPropsType
+
+// const ProfilePage: React.FC<PropsType> =(props)=> {
+//
+//     const isAuth = useSelector(getIsAuth)
+//     const dispatch = useDispatch()
+//
+//     return (
+//         <Profile {...this.props}
+//                  isOwner={!this.props.match.params.userId}
+//                  profile={this.props.profile}
+//                  status={this.props.status}
+//                  updateStatus={this.props.updateStatus}
+//                  savePhoto = {this.props.savePhoto}
+//                  saveProfile = {this.props.saveProfile}
+//         />
+//     )
+// }
+
 
 class ProfileContainer extends React.Component<PropsType> {
 
