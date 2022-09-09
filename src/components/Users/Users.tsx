@@ -57,20 +57,6 @@ export const Users: React.FC<PropsType> = (props) => {
         dispatch(requestUsers(actualPage, pageSize, actualFilter))
     }, [])
 
-    // useEffect(() => {
-    //
-    //     const querySearch: QueryParamsSearchType = {}
-    //
-    //     if (!!filter.term) querySearch.term = filter.term
-    //     if (filter.friend !== null) querySearch.friend = String(filter.friend)
-    //     if (currentPage !== 1) querySearch.page = String(currentPage)
-    //
-    //     history.push({
-    //         pathname: '/users' ,
-    //         search: query.stringify(querySearch)
-    //     })
-    // }, [filter, currentPage])
-
     useEffect(() => {
         const querySearch: QueryParamsSearchType = {}
 
