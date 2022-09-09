@@ -55,7 +55,6 @@ export const usersReducer = (state = initialState, action: ActionsType): Initial
                     : state.followingInProgress.filter(id => id != action.userId)
             }
         case "SN/USERS/SET_FILTER":
-            debugger
             return {...state, filter: action.payload}
         default:
             return state;
@@ -83,8 +82,9 @@ export const requestUsers = (requestPage: number,pageSize: number,filter: Filter
     dispatch(actions.toggleIsFetching(true));
     dispatch(actions.setCurrentPage(requestPage))
     dispatch(actions.setFilter(filter))
-    debugger
-    let data = await usersApi.requestUsers(requestPage, pageSize , filter.term, filter.friend)
+
+    let data = await usersApi.getUsers(requestPage, pageSize , filter.term, filter.friend)
+
     dispatch(actions.toggleIsFetching(false));
     dispatch(actions.setUsers(data.items));
     dispatch(actions.setTotalUsersCount(data.totalCount));

@@ -23,9 +23,10 @@ export const actions = {
 }
 
 // TODO ADD TYPE !!!!!!!!!
-export const initializeApp = () => (dispatch:any) => {
-    dispatch(getAuthUserData())
-    Promise.all([Promise])
+export const initializeApp = ():ThunkType => async (dispatch) => {
+    let promise = dispatch(getAuthUserData());
+
+    await Promise.all([promise])
         .then(() => {
             dispatch(actions.initializedSuccess())
         })
