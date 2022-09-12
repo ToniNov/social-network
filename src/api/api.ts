@@ -26,6 +26,7 @@ export type GetItemsType = {
 export type APIResponseType<D = {}, RC = ResultCodesEnum > = {
     data: D
     messages: Array<string>
+    fieldsErrors?: Array<string>
     resultCode: RC
 }
 

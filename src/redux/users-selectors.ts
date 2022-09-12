@@ -27,3 +27,7 @@ export const getCaptchaUrl = (state: AppRootStateType) => {
 export const getIsAuth = (state: AppRootStateType) => {
     return state.auth.isAuth;
 }
+//App selectors
+export const selectIsInitialized =(state:AppRootStateType) => {
+    return state.app.isInitialized
+};

@@ -47,3 +47,7 @@ export type UserType = {
     status: string
     location: { city: string, country: string }
 }
+
+export type NullableType<T> = null | T
+
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

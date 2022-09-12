@@ -1,96 +1,76 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import {connect, Provider} from "react-redux";
-import {compose} from "redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
-import {AppRootStateType, store} from "./redux/redux-store";
+import {store} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
-
+import {selectIsInitialized} from "./redux/users-selectors";
+import {ErrorSnackbar} from "./components/common/ErrorSnackbar/ErrorSnackbar";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 const UsersPage = React.lazy(() => import("./components/Users/UsersPage"));
 const LoginPage = React.lazy(() => import("./components/Login/LoginPage"));
-
 const NotFound = () => <div>404 Not found</div>;
 
-type PropsType = MapPropsType & DispatchToPropsType
 
-type MapPropsType = ReturnType<typeof mapStateToProps>
-type DispatchToPropsType = {
-    initializeApp:() => void
-}
 
-class App extends React.Component<PropsType> {
+const App = ()=> {
 
-    catchAllUnhandledErrors = (e: PromiseRejectionEvent) =>{
-        alert("Some error occured")
+    const initialized = useSelector(selectIsInitialized)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(initializeApp())
+    }, [])
+
+    if (!initialized){
+        return <Preloader/>
     }
 
-    componentDidMount() {
-        this.props.initializeApp()
-        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
-    }
-    componentWillUnmount() {
-        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
-    }
+    return (
+        <div className='app-wrapper'>
+            <HeaderContainer/>
+            <Navbar/>
+            <ErrorSnackbar/>
+            <div className='app-wrapper-content'>
+                <Switch>
+                    <Route exact path={'/'}
+                           render = {() => <Redirect to={'/profile'}/>}/>
+                    <Route exact path={'/dialogs'}
+                           render = {() => withSuspense(DialogsContainer)}/>
+                    <Route exact path={'/profile/:userId?'}
+                           render = {() => withSuspense(ProfileContainer)}/>
+                    <Route exact path={'/users'}
+                           render = {() => withSuspense(UsersPage)}/>
+                    <Route exact path={'/login'}
+                           render = {() => withSuspense(LoginPage)}/>
+                    <Route exact path={'/news'}
+                           render = {() => withSuspense(News)}/>
+                    <Route exact path={'/music'}
+                           render = {() => withSuspense(Music)}/>
+                    <Route exact path={'/settings'}
+                           render = {() => withSuspense(Settings)}/>
+                    <Route component={NotFound} />
+                </Switch>
 
-    render() {
-        if (!this.props.initializeApp){
-            return <Preloader/>
-        }
-
-        return (
-            <div className='app-wrapper'>
-                <HeaderContainer/>
-                <Navbar/>
-                <div className='app-wrapper-content'>
-
-                   <Switch>
-                       <Route exact path={'/'}
-                              render = {() => <Redirect to={'/profile'}/>}/>
-                       <Route exact path={'/dialogs'}
-                              render = {() => withSuspense(DialogsContainer)}/>
-                       <Route exact path={'/profile/:userId?'}
-                              render = {() => withSuspense(ProfileContainer)}/>
-                       <Route exact path={'/users'}
-                              render = {() => withSuspense(UsersPage)}/>
-                       <Route exact path={'/login'}
-                              render = {() => withSuspense(LoginPage)}/>
-                       <Route exact path={'/news'}
-                              render = {() => withSuspense(News)}/>
-                       <Route exact path={'/music'}
-                              render = {() => withSuspense(Music)}/>
-                       <Route exact path={'/settings'}
-                              render = {() => withSuspense(Settings)}/>
-                       <Route component={NotFound} />
-                   </Switch>
-
-                </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
-
-let mapStateToProps = (state:AppRootStateType) =>({ initialized : state.app.initialized})
-
-let AppContainer = compose<React.ComponentType>(
-    withRouter,
-    connect<MapPropsType, DispatchToPropsType, {}, AppRootStateType>(mapStateToProps,
-        {initializeApp}))(App)
 
 let RootAppSocialNetwork : React.FC = () => {
     return <BrowserRouter>
         <Provider store={store}>
-            <AppContainer/>
+            <App/>
         </Provider>
     </BrowserRouter>
 }
