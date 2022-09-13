@@ -12,6 +12,7 @@ import {selectIsInitialized} from "./redux/users-selectors";
 import {ErrorSnackbar} from "./components/common/ErrorSnackbar/ErrorSnackbar";
 import {CircularProgress} from "@mui/material";
 import {AppHeaderBar} from "./components/Header/AppHeaderBar";
+import LoginFormik from "./components/Login/LoginFormik";
 
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));

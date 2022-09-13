@@ -1,29 +1,49 @@
 import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../redux/auth-reducer";
+import {useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
-import {LoginFormValuesType, LoginReduxForm} from "./LoginForm";
-import {getCaptchaUrl, getIsAuth} from "../../redux/users-selectors";
+import {getIsAuth} from "../../redux/users-selectors";
+import CssBaseline from "@mui/material/CssBaseline";
+import Avatar from "@mui/material/Avatar";
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import LoginFormik from "./LoginFormik";
+import {ThemeProvider} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {createTheme} from '@mui/material/styles';
+
+const theme = createTheme();
 
 const LoginPage: React.FC = (props) => {
 
-    const captchaUrl = useSelector(getCaptchaUrl)
     const isAuth = useSelector(getIsAuth)
-    const dispatch = useDispatch()
-
-    const onSubmit = (formData: LoginFormValuesType) => {
-        dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
-    }
 
     if (isAuth) {
         return <Redirect to={"/profile"}/>
     }
 
     return (
-        <div>
-            <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
-        </div>
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+                    <LoginFormik/>
+                </Box>
+            </Container>
+        </ThemeProvider>
     );
 };
 
