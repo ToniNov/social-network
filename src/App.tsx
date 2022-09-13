@@ -1,18 +1,18 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import Navbar from "./components/Navbar/Navbar";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import HeaderContainer from "./components/Header/HeaderContainer";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import {store} from "./redux/redux-store";
-import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
 import {selectIsInitialized} from "./redux/users-selectors";
 import {ErrorSnackbar} from "./components/common/ErrorSnackbar/ErrorSnackbar";
+import {CircularProgress} from "@mui/material";
+import {AppHeaderBar} from "./components/Header/AppHeaderBar";
+
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
@@ -32,13 +32,15 @@ const App = ()=> {
     }, [])
 
     if (!initialized){
-        return <Preloader/>
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
     }
 
     return (
         <div className='app-wrapper'>
-            <HeaderContainer/>
-            <Navbar/>
+            <AppHeaderBar/>
             <ErrorSnackbar/>
             <div className='app-wrapper-content'>
                 <Switch>
