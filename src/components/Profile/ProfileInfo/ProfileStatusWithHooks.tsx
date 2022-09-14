@@ -1,4 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {Input} from "@mui/material";
+import {useDispatch} from "react-redux";
+import {updateStatus} from "../../../redux/profile-reducer";
 
 type ProfileStatusType = {
     status: string
@@ -10,6 +13,8 @@ const ProfileStatusWithHooks = (props: ProfileStatusType) => {
     let [editMode, setEditMode] = useState(false)
     let [status, setStatus] = useState(props.status)
 
+    const dispatch = useDispatch()
+
     useEffect(()=>{
         setStatus(props.status)
     },[props.status])
@@ -20,8 +25,9 @@ const ProfileStatusWithHooks = (props: ProfileStatusType) => {
 
      const deactivateEditMod = () => {
          setEditMode(false)
-         props.updateStatus(status)
+         dispatch(updateStatus(status))
      }
+
      const onStatusChange = (e:ChangeEvent<HTMLInputElement>) => {
          setStatus(e.currentTarget.value)
     }
@@ -36,7 +42,7 @@ const ProfileStatusWithHooks = (props: ProfileStatusType) => {
             }
             {editMode &&
                 <div>
-                    <input
+                    <Input
                         onChange={onStatusChange}
                         value={status}
                         onBlur={deactivateEditMod}
