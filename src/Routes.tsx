@@ -6,7 +6,7 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
-const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
+const Profile = React.lazy(() => import("./components/Profile/Profile"));
 const UsersPage = React.lazy(() => import("./components/Users/UsersPage"));
 const LoginPage = React.lazy(() => import("./components/Login/LoginPage"));
 const NotFound = () => <div>404 Not found</div>;
@@ -29,7 +29,7 @@ export const Routes = () => {
             <Route exact path={PATH.DIALOGS}
                    render = {() => withSuspense(DialogsContainer)}/>
             <Route exact path={PATH.PROFILE + '/:userId?'}
-                   render = {() => withSuspense(ProfileContainer)}/>
+                   render = {() => withSuspense(Profile)}/>
             <Route exact path={PATH.USERS}
                    render = {() => withSuspense(UsersPage)}/>
             <Route exact path={PATH.LOGIN}

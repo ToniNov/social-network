@@ -1,53 +1,60 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from './ProfileInfo.module.css';
-import {Preloader} from "../../common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/userPhoto.png";
 import ProfileDataForm from "./ProfileDataForm";
 import {ContactsType, ProfileType} from "../../../types/types";
+import {useDispatch} from "react-redux";
+import {CircularProgress} from "@mui/material";
 
 type PropsType = {
     profile: null | ProfileType
     status: string
     updateStatus: (status: string) => void
-    isOwner: boolean
+    isAuth: boolean
     savePhoto: (file: File ) => void
-    saveProfile: (profile: ProfileType) => Promise<any>
+    saveProfile: (profile: ProfileType) => Promise<void>
 }
 
-const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
+const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth, savePhoto, saveProfile}) => {
 
     const [editMode, setEditMode] = useState(false)
 
+    const dispatch = useDispatch()
+
     if (!profile) {
-        return <Preloader/>
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
     }
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
-            savePhoto(e.target.files[0]);
+            dispatch(savePhoto(e.target.files[0]));
         }
     }
 
     const onSubmit = (formData: ProfileType) => {
-        saveProfile(formData)
-            .then(() => {setEditMode(false);}
-        );
+        dispatch(saveProfile(formData))
+            .then(() => {
+                    setEditMode(false);
+                }
+            );
     }
 
     return (
         <div>
             <div className={s.descriptionBlock}>
                 <img src={profile.photos.large || userPhoto} className={s.mainPhoto}  alt="Profile Photo"/>
-                { isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
+                { isAuth && <input type={"file"} onChange={onMainPhotoSelected} />}
                 { editMode
                     ? <ProfileDataForm profile={profile} initialValues={profile} onSubmit = {onSubmit}/>
                     : <ProfileData profile={profile}
-                                   isOwner ={isOwner}
+                                   isAuth ={isAuth}
                                    goToEditMode={()=>{setEditMode(true)}}
                     />
                 }
-
                 <ProfileStatusWithHooks updateStatus={updateStatus} status={status}/>
             </div>
         </div>
@@ -57,13 +64,13 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwne
 
 type ProfileDataPropsType = {
     profile : ProfileType
-    isOwner: boolean
+    isAuth: boolean
     goToEditMode: () => void
 }
 
-const ProfileData:React.FC<ProfileDataPropsType> = ({profile, isOwner,goToEditMode}) => {
+const ProfileData:React.FC<ProfileDataPropsType> = ({profile, isAuth,goToEditMode}) => {
   return  <div>
-      { isOwner &&<div><button onClick={goToEditMode}>Edit</button></div>}
+      { isAuth &&<div><button onClick={goToEditMode}>Edit</button></div>}
       <div>
           <b>Full name</b>: {profile.fullName}
       </div>

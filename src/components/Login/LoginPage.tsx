@@ -16,10 +16,12 @@ const theme = createTheme();
 
 const LoginPage: React.FC = (props) => {
 
+    console.log('Login rend')
+
     const isAuth = useSelector(getIsAuth)
 
     if (isAuth) {
-        return <Redirect to={"/profile"}/>
+        return <Redirect to={"/"}/>
     }
 
     return (

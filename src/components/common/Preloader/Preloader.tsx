@@ -1,11 +1,11 @@
 import React from 'react';
-import preloader from './../../../assets/images/Pre-loading.svg'
+
+import {CircularProgress} from "@mui/material";
 
 export const Preloader: React.FC = () => {
-    return (
-        <div style={{backgroundColor: "darkgray"}}>
-            <img src={preloader}/>
-        </div>
-    );
+    return <div
+        style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+        <CircularProgress/>
+    </div>
 };
 
