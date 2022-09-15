@@ -32,8 +32,7 @@ export const getIsAuth = (state: AppRootStateType) => {
 export const getUserId = (state: AppRootStateType) => {
     return state.auth.userId;
 }
-
-//APP selectors
+//App selectors
 export const selectIsInitialized =(state:AppRootStateType) => {
     return state.app.isInitialized
 };
