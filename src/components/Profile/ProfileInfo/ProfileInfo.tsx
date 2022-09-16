@@ -1,11 +1,11 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import s from './ProfileInfo.module.css';
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-import userPhoto from "../../../assets/images/userPhoto.png";
 import ProfileDataForm from "./ProfileDataForm";
 import {ContactsType, ProfileType} from "../../../types/types";
 import {useDispatch} from "react-redux";
 import {CircularProgress} from "@mui/material";
+import {ProfileAvatarContainer} from "./ProfileAvatarContainer";
 
 type PropsType = {
     profile: null | ProfileType
@@ -29,11 +29,6 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth
         </div>
     }
 
-    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length) {
-            dispatch(savePhoto(e.target.files[0]));
-        }
-    }
 
     const onSubmit = (formData: ProfileType) => {
         dispatch(saveProfile(formData))
@@ -46,8 +41,9 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={profile.photos.large || userPhoto} className={s.mainPhoto}  alt="Profile Photo"/>
-                { isAuth && <input type={"file"} onChange={onMainPhotoSelected} />}
+                // TODO SIZE 300PX
+                <ProfileAvatarContainer isAuth={isAuth} profile={profile} savePhoto={savePhoto}/>
+
                 { editMode
                     ? <ProfileDataForm profile={profile} initialValues={profile} onSubmit = {onSubmit}/>
                     : <ProfileData profile={profile}

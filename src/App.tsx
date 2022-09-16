@@ -9,6 +9,8 @@ import {ErrorSnackbar} from "./components/common/ErrorSnackbar/ErrorSnackbar";
 import {CircularProgress} from "@mui/material";
 import {AppHeaderBar} from "./components/Header/AppHeaderBar";
 import Routes from "./Routes";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 
 const App = ()=> {
 
@@ -30,9 +32,10 @@ const App = ()=> {
         <div className='app-wrapper'>
             <AppHeaderBar/>
             <ErrorSnackbar/>
-            <div className='app-wrapper-content'>
+            <CssBaseline />
+            <Container maxWidth="lg">
                <Routes/>
-            </div>
+            </Container>
         </div>
     );
 }
