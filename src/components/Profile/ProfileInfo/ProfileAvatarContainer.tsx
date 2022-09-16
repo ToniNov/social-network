@@ -2,11 +2,9 @@ import React, {ChangeEvent} from 'react';
 import userPhoto from "../../../assets/images/userPhoto.png";
 import {ProfileType} from "../../../types/types";
 import {useDispatch} from "react-redux";
-import {Icon, Paper} from "@mui/material";
+import {Paper} from "@mui/material";
 import Badge from '@mui/material/Badge';
-import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-
 import {PhotoCamera} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 
@@ -31,7 +29,7 @@ export const ProfileAvatarContainer: React.FC<PropsType> = ({profile, isAuth, sa
         <Paper sx={{
             width: '300px',
             bgcolor: '#cfe8fc',
-            padding: '40px ',
+            padding: '20px ',
             display: "flex",
             flexDirection: 'column',
         }}>

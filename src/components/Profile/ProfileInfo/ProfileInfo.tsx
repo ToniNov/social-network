@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import s from './ProfileInfo.module.css';
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-import ProfileDataForm from "./ProfileDataForm";
-import {ContactsType, ProfileType} from "../../../types/types";
+import ProfileDataForm from "./ProfileData/ProfileDataForm";
+import {ProfileType} from "../../../types/types";
 import {useDispatch} from "react-redux";
 import {CircularProgress} from "@mui/material";
 import {ProfileAvatarContainer} from "./ProfileAvatarContainer";
+import {ProfileData} from "./ProfileData/ProfileData";
 
 type PropsType = {
     profile: null | ProfileType
@@ -29,7 +30,6 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth
         </div>
     }
 
-
     const onSubmit = (formData: ProfileType) => {
         dispatch(saveProfile(formData))
             .then(() => {
@@ -38,10 +38,12 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth
             );
     }
 
+    //TODO SIZE 300PX
+
     return (
         <div>
             <div className={s.descriptionBlock}>
-                // TODO SIZE 300PX
+
                 <ProfileAvatarContainer isAuth={isAuth} profile={profile} savePhoto={savePhoto}/>
 
                 { editMode
@@ -56,50 +58,6 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth
         </div>
     );
 };
-
-
-type ProfileDataPropsType = {
-    profile : ProfileType
-    isAuth: boolean
-    goToEditMode: () => void
-}
-
-const ProfileData:React.FC<ProfileDataPropsType> = ({profile, isAuth,goToEditMode}) => {
-  return  <div>
-      { isAuth &&<div><button onClick={goToEditMode}>Edit</button></div>}
-      <div>
-          <b>Full name</b>: {profile.fullName}
-      </div>
-      <div>
-          <b>Looking for  a job</b>: {profile.lookingForAJob ? 'yes' : 'no'}
-      </div>
-      {profile.lookingForAJob &&
-          <div>
-              <b>My professional skills</b>: {profile.lookingForAJobDescription}
-          </div>
-      }
-      <div>
-          <b>About me</b>: {profile.aboutMe}
-      </div>
-      <div>
-          <b>Contacts</b>: {
-          Object
-              .keys(profile.contacts)
-              .map((key)  => {
-                  return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key as keyof ContactsType]}/>
-              })}
-      </div>
-  </div>
-}
-
-type ContactsPropsType = {
-    contactTitle: string
-    contactValue: string | null
-}
-
-const Contact:React.FC<ContactsPropsType> = ({contactTitle, contactValue}) => {
-    return <div><b>{contactTitle}</b> : {contactValue}</div>
-}
 
 
 export default ProfileInfo;
