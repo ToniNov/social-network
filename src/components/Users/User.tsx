@@ -45,10 +45,6 @@ export const User: React.FC<PropsType> = ({user, unfollow, follow, followingInPr
                   <div>{user.name}</div>
                   <div>{user.status}</div>
             </span>
-            <span>
-                  <div>{'user.location.country'}</div>
-                  <div>{'user.location.city'}</div>
-           </span>
         </div>
     )
 };

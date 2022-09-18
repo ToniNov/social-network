@@ -3,6 +3,8 @@ import {Field, Form, Formik} from 'formik';
 import {FilterType} from "../../redux/users-reducer";
 import {useSelector} from "react-redux";
 import {getUsersFilter} from "../../redux/users-selectors";
+import Button from "@mui/material/Button";
+import {SearchInput} from "../common/SearchInput";
 
 
 const usersSearchFormValidate =(values: any) => {
@@ -45,15 +47,15 @@ export const UsersSearchForm: React.FC<PropsType> = React.memo ((props) => {
             >
                 {({ isSubmitting }) => (
                     <Form>
-                        <Field type="text" name="term" />
+                        <SearchInput  type="text" name="term"/>
                         <Field name="friend" as="select">
-                            <option value="null">All</option>
+                            <option value="null">All Users</option>
                             <option value="true">Only followed</option>
                             <option value="false">Only unfollowed</option>
                         </Field>
-                        <button type="submit" disabled={isSubmitting}>
+                        <Button variant="contained" type="submit" disabled={isSubmitting}>
                             Submit
-                        </button>
+                        </Button>
                     </Form>
                 )}
             </Formik>
