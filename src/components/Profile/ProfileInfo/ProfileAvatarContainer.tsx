@@ -27,11 +27,12 @@ export const ProfileAvatarContainer: React.FC<PropsType> = ({profile, isAuth, sa
 
     return (
         <Paper sx={{
-            width: '300px',
+            minWidth: "340",
             bgcolor: '#cfe8fc',
             padding: '20px ',
             display: "flex",
-            flexDirection: 'column',
+            flexDirection: 'row',
+            justifyContent: 'center'
         }}>
             <Badge
                 overlap="circular"
@@ -49,7 +50,7 @@ export const ProfileAvatarContainer: React.FC<PropsType> = ({profile, isAuth, sa
             >
 
             <Avatar  src={profile.photos.large || userPhoto}
-                     sx={{ width: 250, height: 250 }}
+                     sx={{ width: 340, height: 340 }}
                      alt="Profile Photo"/>
             </Badge>
         </Paper>

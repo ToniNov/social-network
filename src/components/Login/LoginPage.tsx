@@ -11,6 +11,7 @@ import {ThemeProvider} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {createTheme} from '@mui/material/styles';
+import {PATH} from "../../Routes";
 
 const theme = createTheme();
 
@@ -21,7 +22,7 @@ const LoginPage: React.FC = (props) => {
     const isAuth = useSelector(getIsAuth)
 
     if (isAuth) {
-        return <Redirect to={"/"}/>
+        return <Redirect to={PATH.PROFILE}/>
     }
 
     return (
