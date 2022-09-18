@@ -72,6 +72,7 @@ const ProfileStatusWithHooks = (props: ProfileStatusType) => {
             {editMode &&
                 <Box>
                     <Input
+                        fullWidth
                         onChange={onStatusChange}
                         value={status}
                         onBlur={deactivateEditMod}

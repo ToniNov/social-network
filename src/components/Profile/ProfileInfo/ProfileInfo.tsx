@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import s from './ProfileInfo.module.css';
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import ProfileDataForm from "./ProfileData/ProfileDataForm";
 import {ProfileType} from "../../../types/types";
 import {useDispatch} from "react-redux";
-import {CircularProgress} from "@mui/material";
+import {CircularProgress, Grid} from "@mui/material";
 import {ProfileAvatarContainer} from "./ProfileAvatarContainer";
 import {ProfileData} from "./ProfileData/ProfileData";
+import Box from "@mui/material/Box";
 
 type PropsType = {
     profile: null | ProfileType
@@ -38,24 +38,31 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth
             );
     }
 
-    //TODO SIZE 300PX
-
     return (
-        <div>
-            <div className={s.descriptionBlock}>
+            <Box sx={{flexGrow: 1}}>
+                <Grid container spacing={1} >
+                    <Grid item xs={4}>
+                        <Grid >
+                            <ProfileAvatarContainer isAuth={isAuth} profile={profile} savePhoto={savePhoto}/>
+                        </Grid>
+                        <Grid sx={{my: 1}}>
+                            <ProfileStatusWithHooks updateStatus={updateStatus} status={status}/>
+                        </Grid>
+                    </Grid>
 
-                <ProfileAvatarContainer isAuth={isAuth} profile={profile} savePhoto={savePhoto}/>
-
-                { editMode
-                    ? <ProfileDataForm profile={profile} initialValues={profile} onSubmit = {onSubmit}/>
-                    : <ProfileData profile={profile}
-                                   isAuth ={isAuth}
-                                   goToEditMode={()=>{setEditMode(true)}}
-                    />
-                }
-                <ProfileStatusWithHooks updateStatus={updateStatus} status={status}/>
-            </div>
-        </div>
+                    <Grid item xs={8}>
+                        {editMode
+                            ? <ProfileDataForm profile={profile} initialValues={profile} onSubmit={onSubmit}/>
+                            : <ProfileData profile={profile}
+                                           isAuth={isAuth}
+                                           goToEditMode={() => {
+                                               setEditMode(true)
+                                           }}
+                            />
+                        }
+                    </Grid>
+                </Grid>
+            </Box>
     );
 };
 

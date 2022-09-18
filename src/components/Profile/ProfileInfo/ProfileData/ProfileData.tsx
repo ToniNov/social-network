@@ -10,9 +10,21 @@ type ProfileDataPropsType = {
     goToEditMode: () => void
 }
 export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isAuth, goToEditMode}) => {
+
+
+    const contacts =  Object.keys(profile.contacts)
+
+    const firstPart = contacts.slice(0, Math.ceil(contacts.length / 2))
+    const secondPart = contacts.slice(-Math.floor(contacts.length / 2))
+
+    const mapKeyContact = (key: string) => {
+        return <Contact key={key} contactTitle={key}
+                        contactValue={profile.contacts[key as keyof ContactsType]}/>
+    }
+
     return (
         <Paper sx={{
-            width: '900px',
+            width: 'inherit',
             bgcolor: '#91eeb5',
             padding: '20px ',
             display: "flex",
@@ -41,13 +53,16 @@ export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isAuth, go
                 }}>
                     <Typography variant='body1'>
                         <b>Contacts</b>
-                    </Typography> {
-                    Object
-                        .keys(profile.contacts)
-                        .map((key) => {
-                            return <Contact key={key} contactTitle={key}
-                                            contactValue={profile.contacts[key as keyof ContactsType]}/>
-                        })}
+                    </Typography>
+                    <div style={{display: 'flex', width: '700px', justifyContent: 'space-between'}}>
+                        <div>
+                            {firstPart.map(mapKeyContact)}
+                        </div>
+                        <div>
+                            {secondPart.map(mapKeyContact)}
+                        </div>
+                    </div>
+
                 </List>
                 {isAuth &&
                     <div>
