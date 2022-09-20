@@ -50,7 +50,7 @@ export const ProfileAvatarContainer: React.FC<PropsType> = ({profile, isAuth, sa
             >
 
             <Avatar  src={profile.photos.large || userPhoto}
-                     sx={{ width: 340, height: 340 }}
+                     sx={{ width: 270, height: 270 }}
                      alt="Profile Photo"/>
             </Badge>
         </Paper>

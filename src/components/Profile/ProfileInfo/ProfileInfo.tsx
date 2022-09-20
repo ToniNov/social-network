@@ -41,16 +41,16 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth
     return (
             <Box sx={{flexGrow: 1}}>
                 <Grid container spacing={1} >
-                    <Grid item xs={4}>
-                        <Grid >
-                            <ProfileAvatarContainer isAuth={isAuth} profile={profile} savePhoto={savePhoto}/>
-                        </Grid>
-                        <Grid sx={{my: 1}}>
-                            <ProfileStatusWithHooks updateStatus={updateStatus} status={status}/>
-                        </Grid>
+                    <Grid item md={4} >
+                            <Grid >
+                                <ProfileAvatarContainer isAuth={isAuth} profile={profile} savePhoto={savePhoto}/>
+                            </Grid>
+                            <Grid sx={{my: 1}}>
+                                <ProfileStatusWithHooks updateStatus={updateStatus} status={status}/>
+                            </Grid>
                     </Grid>
 
-                    <Grid item xs={8}>
+                    <Grid item md={8} >
                         {editMode
                             ? <ProfileDataForm profile={profile} initialValues={profile} onSubmit={onSubmit}/>
                             : <ProfileData profile={profile}
