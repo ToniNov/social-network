@@ -17,7 +17,6 @@ export const profileReducer = (state = initialState, action: ActionsType): Initi
 
     switch (action.type) {
         case "SN/PROFILE/ADD-POST":
-            debugger
             let newPost: PostType = {
                 id: 3,
                 message: action.newPostText,

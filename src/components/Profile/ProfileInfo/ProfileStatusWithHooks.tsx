@@ -42,12 +42,12 @@ const ProfileStatusWithHooks = (props: ProfileStatusType) => {
     }
 
     const activateViewMod = () => {
-        debugger
+        // debugger
         setViewMode(true)
     }
 
     const deactivateViewMod = () => {
-        debugger
+        // debugger
         setViewMode(false)
     }
 

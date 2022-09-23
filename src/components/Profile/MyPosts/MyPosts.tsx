@@ -1,37 +1,63 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {PostType} from "../../../types/types";
-import AddPostForm, {AddPostFormValuesType} from './AddPostForm/AddPostForm';
+import {Paper} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import CreateIcon from '@mui/icons-material/Create';
+import AddPostFormModal, {AddPostFormValuesType} from "./AddPostForm/AddPostFormModal";
+import {useDispatch, useSelector} from "react-redux";
+import {selectPosts} from "../../../redux/users-selectors";
+import {actions} from "../../../redux/profile-reducer";
 
 
-export type MapPropsType = {
-    posts: Array<PostType>
-}
-export type DispatchPropsType = {
-    addPost: (newPostText: string) => void
-}
+const MyPosts: React.FC = React.memo(props => {
 
-const MyPosts : React.FC<MapPropsType & DispatchPropsType> = React.memo(props => {
+    const dispatch = useDispatch()
+    const posts = useSelector(selectPosts)
+    const [activeAddModal, setActiveAddModal] = useState<boolean>(false)
 
-    const postsElement = [...props.posts]
+    const postsElement = [...posts]
         .reverse()
         .map(p => <Post key={p.id} message={p.message} likeCounts={p.likeCounts}/>);
 
-    let onAddPost = (values: AddPostFormValuesType) => {
-        props.addPost(values.newPostText)
+    const addPostHandler = (values: AddPostFormValuesType) => {
+        dispatch(actions.addPost(values.newPostText))
+        setActiveAddModal(false);
     }
 
+    const addPostButtonHandler = () => {
+        setActiveAddModal(true);
+    };
+
+
     return (
-        <div className={s.postsBlock}>
+        <Paper sx={{
+            minWidth: "340",
+            bgcolor: '#cfe8fc',
+            padding: '10px ',
+            display: "flex",
+            flexDirection: 'row',
+            justifyContent: 'center'
+        }}>
             <div>
-                <h3>My posts</h3>
-                <AddPostForm onSubmit={onAddPost}/>
+                <Typography variant='h5'>My posts</Typography>
+
+                <Button onClick={addPostButtonHandler}>
+                    <CreateIcon/> Add post
+                </Button>
+
+                <AddPostFormModal
+                    prop={activeAddModal}
+                    setActive={setActiveAddModal}
+                    onSubmit={addPostHandler}
+                />
+
                 <div className={s.posts}>
                     {postsElement}
                 </div>
             </div>
-        </div>
+        </Paper>
     );
 });
 
