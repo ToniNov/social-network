@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import {GeneralModal} from "../../../common/Modal/GeneralModal";
 
 type PropsType = {
-    prop: boolean
+    visible: boolean
     setActive: (state: boolean) => void
 }
 
@@ -19,11 +19,12 @@ export type AddPostFormValuesType = {
 
 type AddPostFormValuesTypeKeys = GetStringKeys<AddPostFormValuesType>
 
-const AddPostFormModal: React.FC<PropsType & InjectedFormProps<AddPostFormValuesType, PropsType>> = ({prop, setActive, handleSubmit}) => {
-
+const AddPostFormModal: React.FC<PropsType & InjectedFormProps<AddPostFormValuesType, PropsType>> =
+    ({visible, setActive, handleSubmit}) => {
 
     return (
-        <GeneralModal visible={prop} setVisible={setActive}>
+
+        <GeneralModal visible={visible} setVisible={setActive}>
 
         <form onSubmit={handleSubmit}>
             <Paper sx={{bgcolor: '#e9fccf'}}>

@@ -1,28 +1,42 @@
 import {ContactsType, ProfileType} from "../../../../types/types";
-import React from "react";
+import React, {useState} from "react";
 import {Grid, List, Paper} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CreateIcon from '@mui/icons-material/Create';
+import {useDispatch} from "react-redux";
+import {saveProfile} from "../../../../redux/profile-reducer";
+import ProfileDataFormReduxFormModal from "./ProfileDataForm";
 
 type ProfileDataPropsType = {
     profile: ProfileType
     isAuth: boolean
-    goToEditMode: () => void
 }
 
-export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isAuth, goToEditMode}) => {
+export const ProfileData: React.FC<ProfileDataPropsType> =
+    ({profile,isAuth}) => {
 
-     const contacts =  Object.keys(profile.contacts)
-    // const firstPart = contacts.slice(0, Math.ceil(contacts.length / 2))
-    // const secondPart = contacts.slice(-Math.floor(contacts.length / 2))
+        const dispatch = useDispatch()
+        const [activeEditProfileModal, setActiveEditProfileModal] = useState<boolean>(false)
 
-    const mapKeyContact = (key: string) => {
-        return <Contact key={key} contactTitle={key}
-                        contactValue={profile.contacts[key as keyof ContactsType]}
-        />
-    }
+        const editProfileHandler = async (formData: ProfileType) => {
+            await dispatch(saveProfile(formData));
+            setActiveEditProfileModal(false);
+        }
+
+        const openEditModalHandler = () => {
+            setActiveEditProfileModal(true);
+        }
+
+        //
+        const contacts = Object.keys(profile.contacts)
+        const mapKeyContact = (key: string) => {
+            return <Contact key={key} contactTitle={key}
+                            contactValue={profile.contacts[key as keyof ContactsType]}
+            />
+        }
+
 
     return (
         <Paper sx={{
@@ -40,10 +54,17 @@ export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isAuth, go
                             {profile.fullName}
                         </Typography>
                         <Grid item>
-                            <IconButton size='small'
-                                onClick={goToEditMode}>
+                            <IconButton size='small' onClick={openEditModalHandler}>
                                 <CreateIcon/>Edit Profile
                             </IconButton>
+
+                            <ProfileDataFormReduxFormModal
+                                profile={profile}
+                                visible={activeEditProfileModal}
+                                setActive={setActiveEditProfileModal}
+                                onSubmit={editProfileHandler}
+                            />
+
                         </Grid>
                     </Grid>
                 }

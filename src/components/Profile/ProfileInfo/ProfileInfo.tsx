@@ -7,6 +7,7 @@ import {CircularProgress, Grid} from "@mui/material";
 import {ProfileAvatarContainer} from "./ProfileAvatarContainer";
 import {ProfileData} from "./ProfileData/ProfileData";
 import Box from "@mui/material/Box";
+import {saveProfile} from "../../../redux/profile-reducer";
 
 type PropsType = {
     profile: null | ProfileType
@@ -14,28 +15,15 @@ type PropsType = {
     updateStatus: (status: string) => void
     isAuth: boolean
     savePhoto: (file: File ) => void
-    saveProfile: (profile: ProfileType) => Promise<void>
 }
 
-const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth, savePhoto, saveProfile}) => {
-
-    const [editMode, setEditMode] = useState(false)
-
-    const dispatch = useDispatch()
+const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth, savePhoto}) => {
 
     if (!profile) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
-    }
-
-    const onSubmit = (formData: ProfileType) => {
-        dispatch(saveProfile(formData))
-            .then(() => {
-                    setEditMode(false);
-                }
-            );
     }
 
     return (
@@ -51,15 +39,7 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isAuth
                     </Grid>
 
                     <Grid item md={8} >
-                        {editMode
-                            ? <ProfileDataForm profile={profile} initialValues={profile} onSubmit={onSubmit}/>
-                            : <ProfileData profile={profile}
-                                           isAuth={isAuth}
-                                           goToEditMode={() => {
-                                               setEditMode(true)
-                                           }}
-                            />
-                        }
+                            <ProfileData profile={profile} isAuth={isAuth}/>
                     </Grid>
                 </Grid>
             </Box>

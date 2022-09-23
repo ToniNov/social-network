@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import s from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {Redirect, useParams} from "react-router-dom";
 import {getStatus, getUserProfile, savePhoto, saveProfile, updateStatus} from "../../redux/profile-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
 import {PATH} from "../../Routes";
 import {createTheme} from "@mui/material/styles";
+import MyPosts from "./MyPosts/MyPosts";
 
 
 type PropsType ={}
@@ -45,10 +45,8 @@ const Profile: React.FC<PropsType> = (props) => {
                                  status={status}
                                  updateStatus={updateStatus}
                                  savePhoto={savePhoto}
-                        // @ts-ignore
-                                 saveProfile={saveProfile}
                     />
-                    <MyPostsContainer/>
+                    <MyPosts/>
                 </div>
 
     );

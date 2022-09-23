@@ -2,18 +2,27 @@ import React from "react";
 import {createField, Input, Textarea} from "../../../common/FormsControls/FormsControls";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import s from "../../../common/FormsControls/FormsControls.module.css";
-import {ProfileType} from "../../../../types/types";
+import {ContactsType, ProfileType} from "../../../../types/types";
+import {GeneralModal} from "../../../common/Modal/GeneralModal";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import {Grid} from "@mui/material";
 
 type ProfileDataFormType = {
     profile: ProfileType
+    visible: boolean
+    setActive: (state: boolean) => void
 }
 
-const ProfileDataForm:  React.FC<InjectedFormProps<ProfileType, ProfileDataFormType> & ProfileDataFormType>=({handleSubmit ,profile, error}) => {
+const ProfileDataFormModal:  React.FC<InjectedFormProps<ProfileType, ProfileDataFormType> & ProfileDataFormType>=
+    ({handleSubmit,profile,error,visible,setActive }) => {
+
+
     return (
 
+        <GeneralModal visible={visible} setVisible={setActive}>
 
         <form onSubmit={handleSubmit}>
-            <div><button>Save</button></div>
             {error && <div className={s.formSummaryError}>
                 {error}
             </div>}
@@ -29,17 +38,47 @@ const ProfileDataForm:  React.FC<InjectedFormProps<ProfileType, ProfileDataFormT
             <div>
                 <b>About me</b>:{ createField("About me", "aboutMe", [], Textarea  )}
             </div>
+            <ProfileDataContactsForm profile = {profile}/>
             <div>
-                <b>Contacts</b>: {Object.keys(profile.contacts).map( key =>{
-                return  <div  key={key}>
-                    <b>{key}: {createField(key, "contacts." + key,[], Input )}</b>
-                </div>
-            })}
+                <Button variant="outlined" type={'submit'}>Save</Button>
             </div>
         </form>
+        </GeneralModal>
     )
 }
 
-const ProfileDataFormReduxForm = reduxForm<ProfileType,ProfileDataFormType>({form: 'edit-profile'})(ProfileDataForm)
+type ProfileDataContactsFormType = {
+    profile: ProfileType
+}
 
-export default ProfileDataFormReduxForm;
+export const ProfileDataContactsForm: React.FC<ProfileDataContactsFormType> = ({profile}) => {
+
+    const contacts =  Object.keys(profile.contacts)
+    const firstPart = contacts.slice(0, Math.ceil(contacts.length / 2))
+    const secondPart = contacts.slice(-Math.floor(contacts.length / 2))
+
+    const mapKeyContact = (key: string) => {
+        return <div key={key}>
+            {key}: {createField(key, "contacts." + key,[], Input )}
+        </div>
+    }
+
+    return (
+        <div>
+        <b>Contacts</b>:
+        <div style={{display: 'flex', width: '450px', justifyContent: 'space-between'}}>
+            <div>
+                {firstPart.map(mapKeyContact)}
+            </div>
+            <div>
+                {secondPart.map(mapKeyContact)}
+            </div>
+        </div>
+    </div>
+    );
+};
+
+
+const ProfileDataFormReduxFormModal = reduxForm<ProfileType,ProfileDataFormType>({form: 'edit-profile'})(ProfileDataFormModal)
+
+export default ProfileDataFormReduxFormModal;

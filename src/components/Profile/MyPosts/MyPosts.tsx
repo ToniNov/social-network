@@ -10,7 +10,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectPosts} from "../../../redux/users-selectors";
 import {actions} from "../../../redux/profile-reducer";
 
-
 const MyPosts: React.FC = React.memo(props => {
 
     const dispatch = useDispatch()
@@ -48,7 +47,7 @@ const MyPosts: React.FC = React.memo(props => {
                 </Button>
 
                 <AddPostFormModal
-                    prop={activeAddModal}
+                    visible={activeAddModal}
                     setActive={setActiveAddModal}
                     onSubmit={addPostHandler}
                 />

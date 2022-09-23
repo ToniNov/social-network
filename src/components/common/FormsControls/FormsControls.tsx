@@ -2,6 +2,8 @@ import React from 'react';
 import s from './FormsControls.module.css'
 import {Field, WrappedFieldProps} from "redux-form";
 import {FieldValidatorType} from "../../../utils/validators";
+import InputBase from "@mui/material/InputBase";
+import TextField from "@mui/material/TextField";
 
 type FormControlType = {
     meta: MetaType
@@ -27,12 +29,12 @@ const FormControl = ({meta: {touched, error}, children}: FormControlType) => {
 
 export const Textarea: React.FC<WrappedFieldProps> = (props) => {
     const {input, meta, ...restProps} = props
-    return <FormControl {...props}><textarea {...input} {...restProps}/></FormControl>
+    return <FormControl {...props}><TextField  {...input} {...restProps}/></FormControl>
 };
 
 export const Input: React.FC<WrappedFieldProps> = (props) => {
     const {input, meta, ...restProps} = props
-    return <FormControl {...props}> <input {...input} {...restProps}/></FormControl>
+    return <FormControl {...props}> <InputBase fullWidth={true} {...input} {...restProps}/></FormControl>
 };
 
 export type GetStringKeys<T> = Extract<keyof T, string>
